@@ -359,11 +359,10 @@ namespace DalTest
                     int IdOrder = int.Parse(Console.ReadLine());
                     try
                     {
-                    //    foreach (OrderItem myOrderItem in OI.getOrderItemByOrder(IdOrder))
-                    //    {
-                    //        Console.WriteLine(myOrderItem);//אולי צריך את toString??
-                    //    }
-                        Console.WriteLine(OI.getOrderItemByOrder(IdOrder));
+                        foreach (OrderItem myOrderItem in OI.getOrderItemByOrder(IdOrder))
+                        {
+                            Console.WriteLine(myOrderItem);
+                        }
                     }
                     catch (Exception e)
                     {

@@ -47,6 +47,19 @@ public static class DataSource
         ordersArr[Config.indexOrders++] = order;
     }
 
+    static private void addOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress)
+    {
+        DateTime _today = DateTime.Now;
+        int daysAgo = new Random().Next(600);
+        DateTime NewOrderDate = _today.AddDays(-daysAgo);
+        int daysbetweenOrderToShip = new Random().Next(10);
+        DateTime newShipDate = NewOrderDate.AddDays(daysbetweenOrderToShip);
+        int daysbetweenDeliveryToShip = new Random().Next(7);
+        DateTime newDeliveryDate = newShipDate.AddDays(daysbetweenDeliveryToShip);
+        addOrder(new DO.Orders(){ _customerName = newCustomerName, _email = newCustomerEmail, _address = newCustomerAdress, _orderDate = NewOrderDate, _shippingDate=newShipDate, _deliveryDate=newDeliveryDate });
+
+    }
+
     private static void addProduct(Products product)
     {
         productsArr[Config.indexProducts++] = product;

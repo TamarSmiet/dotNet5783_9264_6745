@@ -80,16 +80,21 @@ namespace Dal
                 if(orderId== orderItemsArr[i]._orderId)
                     count++;     
             }
-            OrderItem[] _orderItemsByOrderArr=new OrderItem[count];
-            for (int i = 0; i < Config.indexOrderItems; i++)
+            if(count> 0)
             {
-                if(orderId== orderItemsArr[i]._orderId)
+                OrderItem[] _orderItemsByOrderArr = new OrderItem[count];
+                for (int i = 0; i < Config.indexOrderItems; i++)
                 {
-                    _orderItemsByOrderArr[index] = orderItemsArr[i];
-                    index++;
+                    if (orderId == orderItemsArr[i]._orderId)
+                    {
+                        _orderItemsByOrderArr[index] = orderItemsArr[i];
+                        index++;
+                    }
                 }
+                return _orderItemsByOrderArr;
             }
-            return _orderItemsByOrderArr;
+            throw new Exception("there are no order with this id!");
+            
         }
 
         public OrderItem[] getOrderItemsArr()
