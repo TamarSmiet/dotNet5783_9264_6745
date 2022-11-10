@@ -7,13 +7,12 @@ namespace Dal
     {
         public void addOrderItem(OrderItem orderItem)
         {
-            orderItem._id = Config.IdOrder;
-            for(int i=0;i!=Config.indexOrderItems;i++)
+            //orderItem._id = Config.IdOrder;
+            for(int i=0;i<Config.indexOrderItems;i++)
             {
                 if(orderItem._id== orderItemsArr[i]._id)
                 {
-                    //אמור להיות פו את זה לא יודעת מה הבעיה שלו מיבחינת התחביר 
-                    throw new Exception ("product allready exists");//נראה שזה התחביר אבל צריך לבדוק
+                    throw new Exception ("product allready exists");
                 }
             }
             orderItemsArr[Config.indexOrderItems++] = orderItem;
@@ -33,19 +32,20 @@ namespace Dal
 
         public void deleteOrderItem(int id)
         {
-            for (int i = 0; i != Config.indexOrderItems; i++)
+            for (int i = 0; i < Config.indexOrderItems; i++)
             {
                 if (id == orderItemsArr[i]._id)
                 {
                     orderItemsArr[i] = orderItemsArr[Config.indexOrderItems - 1];
                     Config.indexOrderItems--;
+                    break; 
                 }
             }
         }
 
         public OrderItem getOrderItemByOandP(int orderId ,int productId)
         {
-            for (int i = 0; i != Config.indexOrderItems; i++)
+            for (int i = 0; i < Config.indexOrderItems; i++)
             {
                 if ((orderId == orderItemsArr[i]._orderId) && (productId == orderItemsArr[i]._productId))
                 {
@@ -54,7 +54,7 @@ namespace Dal
                 
  
             }
-            return null;
+            throw new Exception("order item with there ids does not exist!");
         }
 
         public OrderItem getOrderItem(int orderItemId)
@@ -68,20 +68,20 @@ namespace Dal
                  
 
             }
-            return null;
+           throw new Exception("order item with this id does not exist!");
         }
 
         public OrderItem[] getOrderItemByOrder(int orderId)
         {
             int index = 0;
             int count = 0;
-            for (int i = 0; i != Config.indexOrderItems; i++)
+            for (int i = 0; i < Config.indexOrderItems; i++)
             {
                 if(orderId== orderItemsArr[i]._orderId)
                     count++;     
             }
             OrderItem[] _orderItemsByOrderArr=new OrderItem[count];
-            for (int i = 0; i != Config.indexOrderItems; i++)
+            for (int i = 0; i < Config.indexOrderItems; i++)
             {
                 if(orderId== orderItemsArr[i]._orderId)
                 {
@@ -90,6 +90,16 @@ namespace Dal
                 }
             }
             return _orderItemsByOrderArr;
+        }
+
+        public OrderItem[] getOrderItemsArr()
+        {
+            OrderItem[] orderItemsArrToReturn = new OrderItem[Config.indexOrderItems];
+            for(int i = 0; i != Config.indexOrderItems; i++)
+            {
+                orderItemsArrToReturn[i] = orderItemsArr[i];
+            }
+            return orderItemsArrToReturn;
         }
 
     }

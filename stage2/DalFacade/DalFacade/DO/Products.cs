@@ -12,11 +12,12 @@ public struct Products
     public string _productName { get; set; }
     public double _price { get; set; }
     public eCategory _category { get; set; }
+    //public string _category { get; set; }//צריך לעשות קטגורי
     public int _amountInStock { get; set; }
 
 
   
-    public override string ToString() => $@";
+public override string ToString() => $@";
 Product ID = {_productId}: {_productName},
 category - {_category}
 Price: {_price}

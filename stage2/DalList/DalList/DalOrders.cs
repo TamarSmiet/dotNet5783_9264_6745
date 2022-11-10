@@ -1,5 +1,7 @@
 ﻿
 using DO;
+using System.Net;
+using System.Xml.Linq;
 using static Dal.DataSource;
 
 namespace Dal
@@ -12,7 +14,6 @@ namespace Dal
             {
                 if(order._orderId == ordersArr[i]._orderId)
                 {
-                    //אמור להיות פו את זה לא יודעת מה הבעיה שלו מיבחינת התחביר 
                     throw new Exception("order item allready exists");
                 }
             }
@@ -21,23 +22,29 @@ namespace Dal
 
         public void deleteOrder(int oId)
         {
-            for (int i = 0; i != Config.indexOrders; i++)
+            for (int i = 0; i < Config.indexOrders; i++)
             {
                 if (oId == ordersArr[i]._orderId)
                 {
                     ordersArr[i] = ordersArr[Config.indexOrders - 1];
                     Config.indexOrders--;
+                    break;
                 }
             }
         }
-
-        public void updateOrder(Orders order)
+       
+        public void updateOrder(int idToUpdate, string name, string email,string address,DateTime orderDate, DateTime shippingDate,DateTime deliveryDate)
         {
             for (int i = 0; i != Config.indexOrders; i++)
             {
-                if (order._orderId == ordersArr[i]._orderId)
+                if (idToUpdate == ordersArr[i]._orderId)
                 {
-                    ordersArr[i] = order;
+                    ordersArr[i]._customerName = name;
+                    ordersArr[i]._email = email;
+                    ordersArr[i]._address = address;
+                    ordersArr[i]._deliveryDate = deliveryDate;
+                    ordersArr[i]._shippingDate=shippingDate;
+                    ordersArr[i]._deliveryDate=deliveryDate;
                 }
             }
         }
@@ -51,7 +58,19 @@ namespace Dal
                     return ordersArr[i];
                 }
             }
-            return null;
+            throw new Exception("order with this id does not exist!");
         }
+
+        public Orders[] getOrdersArr()
+        {
+            Orders[] ordersArrToReturn=new Orders[Config.indexOrders];
+            for(int i = 0; i != Config.indexOrders; i++)
+            {
+                ordersArrToReturn[i] = ordersArr[i];
+            }
+            return ordersArrToReturn;
+
+        }
+
     }
 }

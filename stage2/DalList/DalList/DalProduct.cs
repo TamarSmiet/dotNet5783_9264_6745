@@ -11,7 +11,7 @@ namespace Dal
             for (int i = 0; i != Config.indexProducts; i++)
             {
                 if (product._productId == productsArr[i]._productId)
-                {//אמור להיות פו את זה לא יודעת מה הבעיה שלו מיבחינת התחביר 
+                {
                     throw new Exception("product allready exists");
                 }
             }
@@ -20,24 +20,28 @@ namespace Dal
 
         public void deleteProduct(int pId)
         {
-            for (int i = 0; i != Config.indexProducts; i++)
+            for (int i = 0; i < Config.indexProducts; i++)
             {
+                //Console.WriteLine(pId+"LLL");
                 if (pId == productsArr[i]._productId)
                 {
-                    productsArr[i] = productsArr[Config.indexProducts - 1];
+                    productsArr[i] = productsArr[Config.indexProducts-1];
                     Config.indexProducts--;
+                    break;
                 }
             }
         }
 
- 
-        public void updateProduct(Products product)
+
+        public void updateProduct(int id, string name, double price,int amountInStock)
         {
             for (int i = 0; i != Config.indexProducts; i++)
             {
-                if (product._productId == productsArr[i]._productId)
+                if (id == productsArr[i]._productId)
                 {
-                    productsArr[i] = product;
+                    productsArr[i]._productName = name;
+                    productsArr[i]._price = price;
+                    productsArr[i]._amountInStock = amountInStock;
                 }
             }
         }
@@ -50,13 +54,18 @@ namespace Dal
                     return productsArr[i];
                 }
             }
-            return null;
+            throw new Exception("product with this id does not exist!");
             
         }
-//חסרה מתודה של קריאת כל האובייקטים צריך להעתיק למערך חדש התחלתי טיפה לעשות ונתקעתי 
-        public void printAllProducts()
+
+        public Products[] getAllProducts()
         {
-          
+            Products[] productArrToReturn = new Products[Config.indexProducts];
+            for(int i = 0; i != Config.indexProducts; i++)
+            {
+                productArrToReturn[i]=productsArr[i];
+            }
+            return productArrToReturn;
         }
 
 

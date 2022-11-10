@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.ConstrainedExecution;
-using static DalList.DataSource;
+//using static DalList.DataSource;
 using DO;
 
 namespace DO;
@@ -16,7 +16,8 @@ public struct OrderItem
 
     public override string ToString() => $@"
 ID = {_id}
-Product ID - {_productId}
+Order ID:{_orderId}
+Product ID: {_productId}
 Price: {_pricePerUnit}
 Amount of product: {_quantity} 
 ";
