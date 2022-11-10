@@ -26,10 +26,7 @@ namespace DalTest
 
                 switch (choice)
                 {
-                    //    DateTime.TryParse(Console.ReadLine(), out date);
-                    //order._shippingDate = date;
                     case 1://product
-                           // Console.WriteLine("Enter your choice:");
                         productMethod();
                         break;
 
@@ -62,13 +59,35 @@ namespace DalTest
 
                 case 1://add
                     {
+                        
                         Console.WriteLine("Enter product details:");
+                        Console.WriteLine("Id:");
                         int.TryParse(Console.ReadLine(), out parse);
                         product._productId = parse;
+                        Console.WriteLine("Name:");
                         product._productName = Console.ReadLine();
+                        Console.WriteLine("Price:");
                         int.TryParse(Console.ReadLine(), out parse);
                         product._price = parse;
-                        //product._category = Console.Read();
+                        Console.WriteLine("type 0 for category a, 1 - b, 2 - c, 3 - d");
+                        int category = int.Parse(Console.ReadLine());
+                        switch (category)
+                        {
+                            case 0:
+                                product._category = Enums.eCategory.a;
+                                break;
+                            case 1:
+                                product._category = Enums.eCategory.b;
+                                break;
+                            case 2:
+                                product._category = Enums.eCategory.c;
+                                break;
+                            case 3:
+                                product._category = Enums.eCategory.d;
+                                break;
+
+                        }
+                        Console.WriteLine("Amount in stock:");
                         int.TryParse(Console.ReadLine(), out parse);
                         product._amountInStock = parse;
                         try
@@ -80,6 +99,8 @@ namespace DalTest
                             Console.WriteLine(e);
                         }
                         break;
+
+                        
                     }
                 case 2:
                     {
@@ -121,10 +142,6 @@ namespace DalTest
 
                         Console.WriteLine("Enter an Id of product:");
                         int Id = int.Parse(Console.ReadLine());
-                        string name;
-                        double price;
-                        int amountInStock;
-
                         try
                         {
                             product = p.getproduct(Id);
@@ -136,19 +153,36 @@ namespace DalTest
 
                         Console.WriteLine("the product to update is" + product);
                         Console.WriteLine("Enter the new details of the product:");
-                        //if (Console.ReadLine() != "")
-                        //{
+                       
                         Console.WriteLine("name:");
-                        name = Console.ReadLine();
+                        product._productName = Console.ReadLine();
+                        Console.WriteLine("type 0 for category a, 1 - b, 2 - c, 3 - d");
+                        int category = int.Parse(Console.ReadLine());
+                        switch (category)
+                        {
+                            case 0:
+                                product._category = Enums.eCategory.a;
+                                break;
+                            case 1:
+                                product._category = Enums.eCategory.b;  
+                                break;
+                            case 2:
+                                product._category = Enums.eCategory.c;
+                                break;
+                            case 3:
+                                product._category = Enums.eCategory.d;
+                                break;  
+
+                        }
                         Console.WriteLine("price:");
                         double.TryParse(Console.ReadLine(), out parse2);
-                        price = parse2;
-                        Console.WriteLine("amount");
+                        product._price= parse2;
+                        Console.WriteLine("amount:");
                         int.TryParse(Console.ReadLine(), out parse);
-                        amountInStock = parse;
+                        product._amountInStock = parse;
 
-                        p.updateProduct(Id, name, price, amountInStock);
-                        //}
+                        p.updateProduct(product);
+                   
                         break;
                     }
 

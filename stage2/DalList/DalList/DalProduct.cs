@@ -4,8 +4,15 @@ using static Dal.DataSource;
 
 namespace Dal
 {
+
     public struct DalProduct
     {
+
+        /// <summary>
+        /// adding product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <exception cref="Exception"></exception>
         public void addProduct(Products product)
         {
             for (int i = 0; i != Config.indexProducts; i++)
@@ -18,14 +25,17 @@ namespace Dal
             productsArr[Config.indexProducts++] = product;
         }
 
+        /// <summary>
+        /// delete product
+        /// </summary>
+        /// <param name="pId"></param>
         public void deleteProduct(int pId)
         {
             for (int i = 0; i < Config.indexProducts; i++)
             {
-                //Console.WriteLine(pId+"LLL");
                 if (pId == productsArr[i]._productId)
                 {
-                    productsArr[i] = productsArr[Config.indexProducts-1];
+                    productsArr[i] = productsArr[Config.indexProducts-1];//moves the last product to the index to delete
                     Config.indexProducts--;
                     break;
                 }
@@ -33,15 +43,20 @@ namespace Dal
         }
 
 
-        public void updateProduct(int id, string name, double price,int amountInStock)
+        /// <summary>
+        /// updade the details of a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="price"></param>
+        /// <param name="amountInStock"></param>
+        public void updateProduct(Products product)
         {
             for (int i = 0; i != Config.indexProducts; i++)
             {
-                if (id == productsArr[i]._productId)
+                if (product._productId == productsArr[i]._productId)
                 {
-                    productsArr[i]._productName = name;
-                    productsArr[i]._price = price;
-                    productsArr[i]._amountInStock = amountInStock;
+                    productsArr[i] = product;
                 }
             }
         }
