@@ -72,12 +72,19 @@ public static class DataSource
 
     private static void s_Initialize()
     {
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Oven", _price = 2000, _category = Enums.eCategory.a, _amountInStock = 70 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Stove", _price = 500, _category = Enums.eCategory.d, _amountInStock = 100 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.c, _amountInStock = 50 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.b, _amountInStock = 60 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Kettle", _price = 150, _category = Enums.eCategory.a, _amountInStock = 150 });
-      
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Oven", _price = 2000, _category = Enums.eCategory.kitchen, _amountInStock = 70 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Stove", _price = 500, _category = Enums.eCategory.kitchen, _amountInStock = 100 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.kitchen, _amountInStock = 50 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
+
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Oven", _price = 2000, _category = Enums.eCategory.kitchen, _amountInStock = 70 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Stove", _price = 500, _category = Enums.eCategory.kitchen, _amountInStock = 100 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.kitchen, _amountInStock = 50 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
+        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
+
+
 
         addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Esther Bat Zion Levinson", _email = "ebzlevinson@gmail.com", _address = "Haroe 20/2", _orderDate = new DateTime(27 / 10 / 2022), _shippingDate = new DateTime(28 / 10 / 2022), _deliveryDate = new DateTime(30 / 10 / 2022) });
         addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Tamar Smietanski", _email = "tamarsmiet@gmail.com", _address = "Haroe 20/2", _orderDate = new DateTime(28 / 10 / 2022), _shippingDate = new DateTime(29 / 10 / 2022), _deliveryDate = new DateTime(31 / 10 / 2022) });

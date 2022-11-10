@@ -35,7 +35,7 @@ namespace Dal
             {
                 if (pId == productsArr[i]._productId)
                 {
-                    productsArr[i] = productsArr[Config.indexProducts-1];//moves the last product to the index to delete
+                    productsArr[i] = productsArr[Config.indexProducts-1];//moves the last product of the array to the place of the product to delete
                     Config.indexProducts--;
                     break;
                 }
@@ -46,10 +46,7 @@ namespace Dal
         /// <summary>
         /// updade the details of a product
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="price"></param>
-        /// <param name="amountInStock"></param>
+        /// <param name="product">get the new details to update in an object product</param>
         public void updateProduct(Products product)
         {
             for (int i = 0; i != Config.indexProducts; i++)
@@ -60,6 +57,14 @@ namespace Dal
                 }
             }
         }
+
+
+        /// <summary>
+        /// display a specific product
+        /// </summary>
+        /// <param name="pId">look for this id product in the products array</param>
+        /// <returns>the product that has this id</returns>
+        /// <exception cref="Exception">in case he didn't found the product</exception>
         public Products getproduct(int pId)
         {
             for (int i = 0; i != Config.indexProducts; i++)
@@ -73,6 +78,11 @@ namespace Dal
             
         }
 
+
+        /// <summary>
+        /// get all the product of the array
+        /// </summary>
+        /// <returns>all the product</returns>
         public Products[] getAllProducts()
         {
             Products[] productArrToReturn = new Products[Config.indexProducts];

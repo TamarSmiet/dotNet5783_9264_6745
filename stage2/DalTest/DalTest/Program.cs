@@ -69,21 +69,21 @@ namespace DalTest
                         Console.WriteLine("Price:");
                         int.TryParse(Console.ReadLine(), out parse);
                         product._price = parse;
-                        Console.WriteLine("type 0 for category a, 1 - b, 2 - c, 3 - d");
+                        Console.WriteLine("type 0 for category kitchen, 1 - house, 2 - cellular, 3 - hair");
                         int category = int.Parse(Console.ReadLine());
                         switch (category)
                         {
                             case 0:
-                                product._category = Enums.eCategory.a;
+                                product._category = Enums.eCategory.kitchen;
                                 break;
                             case 1:
-                                product._category = Enums.eCategory.b;
+                                product._category = Enums.eCategory.house;
                                 break;
                             case 2:
-                                product._category = Enums.eCategory.c;
+                                product._category = Enums.eCategory.cellular;
                                 break;
                             case 3:
-                                product._category = Enums.eCategory.d;
+                                product._category = Enums.eCategory.hair;
                                 break;
 
                         }
@@ -102,7 +102,7 @@ namespace DalTest
 
                         
                     }
-                case 2:
+                case 2://display
                     {
                         Console.WriteLine("Enter an Id of product:");
                         //צריך פו את זה 
@@ -156,22 +156,22 @@ namespace DalTest
                        
                         Console.WriteLine("name:");
                         product._productName = Console.ReadLine();
-                        Console.WriteLine("type 0 for category a, 1 - b, 2 - c, 3 - d");
+                        Console.WriteLine("type 0 for category kitchen, 1 - house, 2 - cellular, 3 - hair");
                         int category = int.Parse(Console.ReadLine());
                         switch (category)
                         {
                             case 0:
-                                product._category = Enums.eCategory.a;
+                                product._category = Enums.eCategory.kitchen;
                                 break;
                             case 1:
-                                product._category = Enums.eCategory.b;  
+                                product._category = Enums.eCategory.house;
                                 break;
                             case 2:
-                                product._category = Enums.eCategory.c;
+                                product._category = Enums.eCategory.cellular;
                                 break;
                             case 3:
-                                product._category = Enums.eCategory.d;
-                                break;  
+                                product._category = Enums.eCategory.hair;
+                                break;
 
                         }
                         Console.WriteLine("price:");
@@ -219,7 +219,7 @@ namespace DalTest
                     o.addOrder(order);
                     break;
 
-                case 2:
+                case 2://display
                     Console.WriteLine("Enter an Id of Order:");
                     int Id = int.Parse(Console.ReadLine());
                     try
@@ -255,10 +255,6 @@ namespace DalTest
                 case 5://update
                     Console.WriteLine("Enter an Id of order:");
                     int idToUpdate = int.Parse(Console.ReadLine());
-                    string name;
-                    string email;
-                    string address;
-                    DateTime orderDate, shippingDate, deliveryDate;
                     try
                     {
                         order = o.getOrder(idToUpdate);
@@ -270,18 +266,18 @@ namespace DalTest
                     Console.WriteLine("the order to update is" + order);
                     Console.WriteLine("Enter the new details of the order:");
                     Console.WriteLine("customer name:");
-                    name = Console.ReadLine();
+                    order._customerName = Console.ReadLine();
                     Console.WriteLine("email:");
-                    email = Console.ReadLine();
+                    order._email = Console.ReadLine();
                     Console.WriteLine("address:");
-                    address = Console.ReadLine();
+                    order._address = Console.ReadLine();
                     DateTime.TryParse(Console.ReadLine(), out date);
-                    orderDate = date;
+                    order._orderDate = date;
                     DateTime.TryParse(Console.ReadLine(), out date);
-                    shippingDate = date;
+                    order._shippingDate = date;
                     DateTime.TryParse(Console.ReadLine(), out date);
-                    deliveryDate = date;
-                    o.updateOrder(idToUpdate, name, email, address, orderDate, shippingDate, deliveryDate);
+                    order._deliveryDate = date;
+                    o.updateOrder(order);
 
                     break;
             }
@@ -315,7 +311,7 @@ namespace DalTest
                     OI.addOrderItem(orderItem);
                     break;
 
-                case 2:
+                case 2://display
                     Console.WriteLine("Enter an Id of an order item:");
                     int Id = int.Parse(Console.ReadLine());
                     try

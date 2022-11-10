@@ -2,5 +2,5 @@
 
 public struct Enums
 {
-    public enum eCategory { a,b,c,d};
+    public enum eCategory { kitchen,house,cellular,hair};
 }

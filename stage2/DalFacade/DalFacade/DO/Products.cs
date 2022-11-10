@@ -12,7 +12,6 @@ public struct Products
     public string _productName { get; set; }
     public double _price { get; set; }
     public eCategory _category { get; set; }
-    //public string _category { get; set; }//צריך לעשות קטגורי
     public int _amountInStock { get; set; }
 
 
