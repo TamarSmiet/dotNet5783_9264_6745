@@ -17,6 +17,7 @@ public override string ToString() => $@"
 order ID : {_orderId}
 customer name: {_customerName}
 email: {_email}
+address: {_address}
 order date: {_orderDate} 
 shipping date: {_shippingDate} 
 delivery date: {_deliveryDate}

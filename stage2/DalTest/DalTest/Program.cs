@@ -210,12 +210,12 @@ namespace DalTest
                     order._customerName = Console.ReadLine();
                     order._email = Console.ReadLine();
                     order._address = Console.ReadLine();
-                    DateTime.TryParse(Console.ReadLine(), out date);
-                    order._orderDate = date;
-                    DateTime.TryParse(Console.ReadLine(), out date);
-                    order._shippingDate = date;
-                    DateTime.TryParse(Console.ReadLine(), out date);
-                    order._deliveryDate = date;
+                    //DateTime.TryParse(Console.ReadLine(), out date);
+                    //order._orderDate = date;
+                    //DateTime.TryParse(Console.ReadLine(), out date);
+                    //order._shippingDate = date;
+                    //DateTime.TryParse(Console.ReadLine(), out date);
+                    //order._deliveryDate = date;
                     o.addOrder(order);
                     break;
 
@@ -327,7 +327,7 @@ namespace DalTest
                 case 3:
                     foreach (OrderItem myOrderItem in OI.getOrderItemsArr())
                     {
-                        Console.WriteLine(myOrderItem);//אולי צריך את toString??
+                        Console.WriteLine(myOrderItem);
                     }
                     break;
 

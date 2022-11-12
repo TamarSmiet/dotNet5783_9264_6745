@@ -23,6 +23,10 @@ namespace Dal
                     throw new Exception("order item allready exists");
                 }
             }
+
+            order._orderDate = DateTime.Now;
+            order._shippingDate = DateTime.MinValue;
+            order._deliveryDate = DateTime.MinValue;
             ordersArr[Config.indexOrders++] = order;
         }
 

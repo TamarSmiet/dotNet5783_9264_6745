@@ -42,7 +42,7 @@ public static class DataSource
     {
         s_Initialize();
     }
-    private static void addOrder(Orders order)
+    private static void addOrder2(Orders order)
     {
         ordersArr[Config.indexOrders++] = order;
     }
@@ -56,7 +56,7 @@ public static class DataSource
         DateTime newShipDate = NewOrderDate.AddDays(daysbetweenOrderToShip);
         int daysbetweenDeliveryToShip = new Random().Next(7);
         DateTime newDeliveryDate = newShipDate.AddDays(daysbetweenDeliveryToShip);
-        addOrder(new DO.Orders(){ _customerName = newCustomerName, _email = newCustomerEmail, _address = newCustomerAdress, _orderDate = NewOrderDate, _shippingDate=newShipDate, _deliveryDate=newDeliveryDate });
+        addOrder2(new DO.Orders(){ _orderId = Config.IdOrder,_customerName = newCustomerName, _email = newCustomerEmail, _address = newCustomerAdress, _orderDate = NewOrderDate, _shippingDate=newShipDate, _deliveryDate=newDeliveryDate });
 
     }
 
@@ -86,8 +86,14 @@ public static class DataSource
 
 
 
-        addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Esther Bat Zion Levinson", _email = "ebzlevinson@gmail.com", _address = "Haroe 20/2", _orderDate = new DateTime(27 / 10 / 2022), _shippingDate = new DateTime(28 / 10 / 2022), _deliveryDate = new DateTime(30 / 10 / 2022) });
-        addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Tamar Smietanski", _email = "tamarsmiet@gmail.com", _address = "Haroe 20/2", _orderDate = new DateTime(28 / 10 / 2022), _shippingDate = new DateTime(29 / 10 / 2022), _deliveryDate = new DateTime(31 / 10 / 2022) });
+       // addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Esther Bat Zion Levinson", _email = "ebzlevinson@gmail.com", _address = "Haroe 20/2"/*, _orderDate = new DateTime(27 / 10 / 2022), _shippingDate = new DateTime(28 / 10 / 2022), _deliveryDate = new DateTime(30 / 10 / 2022) */});
+       // addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Tamar Smietanski", _email = "tamarsmiet@gmail.com", _address = "Haroe 20/2"/*, _orderDate = new DateTime(28 / 10 / 2022), _shippingDate = new DateTime(29 / 10 / 2022), _deliveryDate = new DateTime(31 / 10 / 2022) */});
+
+        addOrder( "Esther Bat Zion Levinson",  "ebzlevinson@gmail.com", "Haroe 20/2");
+        addOrder(  "Tamar Smietanski",  "tamarsmiet@gmail.com",  "Haroe 20/2");
+        addOrder("Israel Israeli", "israel@gmail.com", "buksboim 12");
+        addOrder("Avraham Cohen", "avic@gmail.com", "tlalim 21");
+
 
         addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = Config.IdProductOfIdOrderItem, _pricePerUnit = 2000, _quantity = 1 });
         addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = Config.IdProductOfIdOrderItem, _pricePerUnit = 3000, _quantity = 1 });

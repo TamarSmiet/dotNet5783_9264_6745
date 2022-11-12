@@ -7,10 +7,7 @@ namespace DO;
 
 
 public struct OrderItem
-{
-
-    //gyyfgesfjdgfdrdfgj;
-    //njdejfiejfi
+{ 
     public int _id { get; set; }
     public int _orderId { get; set; }
     public int _productId { get; set; }
