@@ -25,17 +25,9 @@ public static class DataSource
 
         internal static int idOrderItem = 1;
         internal static int IdOrderItem { get { return idOrderItem++; } }
-
-      
-
-        //private static int idOrderOfIdOrderItem=num.Next(indexOrders);
         public static int IdOrderOfIdOrderItem { get { return num.Next(indexOrders); } }
 
-        //private static int idProductOfIdOrderItem = num.Next(indexOrders);
         public static int IdProductOfIdOrderItem { get { return num.Next(indexProducts); } }
-
-
-
 
     }
     static DataSource()
@@ -84,13 +76,8 @@ public static class DataSource
         addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
         addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
 
-
-
-       // addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Esther Bat Zion Levinson", _email = "ebzlevinson@gmail.com", _address = "Haroe 20/2"/*, _orderDate = new DateTime(27 / 10 / 2022), _shippingDate = new DateTime(28 / 10 / 2022), _deliveryDate = new DateTime(30 / 10 / 2022) */});
-       // addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Tamar Smietanski", _email = "tamarsmiet@gmail.com", _address = "Haroe 20/2"/*, _orderDate = new DateTime(28 / 10 / 2022), _shippingDate = new DateTime(29 / 10 / 2022), _deliveryDate = new DateTime(31 / 10 / 2022) */});
-
-        addOrder( "Esther Bat Zion Levinson",  "ebzlevinson@gmail.com", "Haroe 20/2");
-        addOrder(  "Tamar Smietanski",  "tamarsmiet@gmail.com",  "Haroe 20/2");
+        addOrder("Esther Bat Zion Levinson",  "ebzlevinson@gmail.com", "Haroe 20/2");
+        addOrder("Tamar Smietanski",  "tamarsmiet@gmail.com",  "Haroe 20/2");
         addOrder("Israel Israeli", "israel@gmail.com", "buksboim 12");
         addOrder("Avraham Cohen", "avic@gmail.com", "tlalim 21");
 
