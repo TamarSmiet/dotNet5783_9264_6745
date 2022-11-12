@@ -16,6 +16,7 @@ public static class DataSource
     }
     internal static class Config
     {
+
         internal static int indexProducts { get; set; } = 0;
         internal static int indexOrders { get; set; } = 0;
         internal static int indexOrderItems { get; set; } = 0;
