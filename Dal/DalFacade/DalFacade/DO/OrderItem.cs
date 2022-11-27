@@ -14,7 +14,7 @@ public struct OrderItem
     public double _pricePerUnit { get; set; }
     public int _quantity { get; set; }
 
-    public override string ToString() => $@"
+public override string ToString() => $@"
 ID = {_id}
 Order ID:{_orderId}
 Product ID: {_productId}

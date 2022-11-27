@@ -3,7 +3,6 @@ using DO;
 
 
 namespace Dal;
-//0527637293
 public static class DataSource
 {
 
@@ -18,15 +17,20 @@ public static class DataSource
     internal static class Config
     {
 
-        //internal static int indexProducts { get; set; } = 0;
-        //internal static int indexOrders { get; set; } = 0;
-        //internal static int indexOrderItems { get; set; } = 0;
-
+      
         internal static int idOrder = 1;
         internal static int IdOrder { get {return idOrder++; } }
+        internal static int idProduct = 100000;
+        internal static int IdProduct { get { return idProduct++; } }
 
         internal static int idOrderItem = 1;
         internal static int IdOrderItem { get { return idOrderItem++; } }
+
+        internal static int idOrderOfIdOrderItem = 1;
+        internal static int IdOrderOfIdOrderItem { get { return idOrderOfIdOrderItem++; } }
+        internal static int idProductOfIdOrderItem = 1;
+        internal static int IdProductOfIdOrderItem { get { return idProductOfIdOrderItem++; } }
+
         //האינדקס פו הוא בשביל מספר רץ לבדוק מה עושים עם זה
         //public static int IdOrderOfIdOrderItem { get { return num.Next(indexOrders); } }
 
@@ -70,17 +74,17 @@ public static class DataSource
 
     private static void s_Initialize()
     {
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Oven", _price = 2000, _category = Enums.eCategory.kitchen, _amountInStock = 70 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Stove", _price = 500, _category = Enums.eCategory.kitchen, _amountInStock = 100 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.kitchen, _amountInStock = 50 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
+        addProduct(new DO.Products() { _productId = Config.IdProduct, _productName = "Oven", _price = 2000, _category = Enums.eCategory.kitchen, _amountInStock = 70 }); ;
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Stove", _price = 500, _category = Enums.eCategory.kitchen, _amountInStock = 100 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.kitchen, _amountInStock = 50 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
 
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Oven", _price = 2000, _category = Enums.eCategory.kitchen, _amountInStock = 70 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Stove", _price = 500, _category = Enums.eCategory.kitchen, _amountInStock = 100 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.kitchen, _amountInStock = 50 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
-        addProduct(new DO.Products() { _productId = num.Next(100000, 999999), _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Oven", _price = 2000, _category = Enums.eCategory.kitchen, _amountInStock = 70 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Stove", _price = 500, _category = Enums.eCategory.kitchen, _amountInStock = 100 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.kitchen, _amountInStock = 50 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
 
         addOrder("Esther Bat Zion Levinson",  "ebzlevinson@gmail.com", "Haroe 20/2");
         addOrder("Tamar Smietanski",  "tamarsmiet@gmail.com",  "Haroe 20/2");
@@ -88,9 +92,9 @@ public static class DataSource
         addOrder("Avraham Cohen", "avic@gmail.com", "tlalim 21");
 
 
-        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = Config.IdProductOfIdOrderItem, _pricePerUnit = 2000, _quantity = 1 });
-        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = Config.IdProductOfIdOrderItem, _pricePerUnit = 3000, _quantity = 1 });
-        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = Config.IdProductOfIdOrderItem, _pricePerUnit = 500, _quantity = 2 });
+        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = 100001, _pricePerUnit = 2000, _quantity = 1 });
+        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = 100002, _pricePerUnit = 500, _quantity = 1 });
+        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = 100003, _pricePerUnit = 3000, _quantity = 2 });
 
 
 

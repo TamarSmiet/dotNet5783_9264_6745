@@ -10,16 +10,16 @@ namespace Dal
 {
     sealed public class DalList:IDal
     {
-        //לממש פרופרטי
-
-        //internal IProducts products
-        //{
-        //    get { return products; }
-        //}
+        
 
         //לא יודעת האם זה כאן......?
-        public IProducts Product => new DalProduct();
-        public IOrders Order => new DalOrder();
-        public IOrderItem OrderItem => new DalOrderItem();
+        public IProducts product => new DalProduct();
+
+
+        public IOrders order => new DalOrder();
+
+
+        public IOrderItem orderItem => new DalOrderItem();
+
     }
 }

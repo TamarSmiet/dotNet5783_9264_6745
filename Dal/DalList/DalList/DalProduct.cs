@@ -3,6 +3,7 @@ using DO;
 using DalApi;
 using static Dal.DataSource;
 using System.Security.Cryptography;
+using System;
 
 namespace Dal
 {
@@ -19,8 +20,9 @@ namespace Dal
         {
             if(productsList.Contains(product))
             {
-                throw new Exception("product allready exists");
+                throw new Exceptions.ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = product.ToString() };
             }
+            product._productId = Config.IdProduct;
             productsList.Add(product);
             return product._productId;
         }
@@ -41,7 +43,8 @@ namespace Dal
                 }
 
             }
-           throw new Exception("grgf");
+            throw new Exceptions.RequestedItemNotFoundException("product with there ids does not exist!") { RequestedItemNotFound = pId.ToString() };
+
         }
 
 
@@ -76,8 +79,8 @@ namespace Dal
                     return productsList[i];
                 }
             }
-            throw new Exception("product with this id does not exist!");
-            
+            throw new Exceptions.RequestedItemNotFoundException("product with there ids does not exist!") { RequestedItemNotFound = pId.ToString() };
+
         }
 
 

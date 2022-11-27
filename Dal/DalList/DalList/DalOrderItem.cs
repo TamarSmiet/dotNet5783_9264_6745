@@ -15,7 +15,8 @@ namespace Dal
         {
             if (orderItemsList.Contains(orderItem))
             {
-                throw new Exception("order item allready exists");
+                throw new Exceptions.ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = orderItem.ToString() };
+
             }
             orderItemsList.Add( orderItem);
             return orderItem._id;
@@ -51,7 +52,8 @@ namespace Dal
                     return; 
                 }
             }
-            throw new Exception("gmtmhkgt");
+            throw new Exceptions.RequestedItemNotFoundException("item not found") { RequestedItemNotFound = id.ToString() };
+
         }
 
         /// <summary>
@@ -72,7 +74,8 @@ namespace Dal
                 
  
             }
-            throw new Exception("order item with there ids does not exist!");
+            throw new Exceptions.RequestedItemNotFoundException("order item with there ids does not exist!") { RequestedItemNotFound = orderId.ToString() + productId .ToString()};
+
         }
 
         /// <summary>
@@ -85,13 +88,13 @@ namespace Dal
         {
             for (int i = 0;  i < orderItemsList.Count; i++)
             {
-                if (orderItemId == orderItemsList[i]._orderId)
+                if (orderItemId == orderItemsList[i]._productId)
                 {
                     return orderItemsList[i];
                 }
 
             }
-           throw new Exception("order item with this id does not exist!");
+            throw new Exceptions.RequestedItemNotFoundException("order item with there ids does not exist!") { RequestedItemNotFound = orderItemId.ToString() };
         }
 
 
@@ -123,8 +126,8 @@ namespace Dal
                 }
                 return _orderItemsByOrderList;
             }
-            throw new Exception("there are no order with this id!");
-            
+            throw new Exceptions.RequestedItemNotFoundException("order item with there ids does not exist!") { RequestedItemNotFound = orderId.ToString() };
+
         }
 
 

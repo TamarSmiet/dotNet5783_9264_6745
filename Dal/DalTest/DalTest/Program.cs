@@ -2,7 +2,6 @@
 using DO;
 using System.Linq.Expressions;
 using Dal;
-
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using DalApi;
@@ -14,11 +13,12 @@ namespace DalTest
         static private Products product = new Products();
         static private Orders order = new Orders();
         static private OrderItem orderItem = new OrderItem();
-        IDal IDalVariable = new DalList();
+        static IDal IDalVariable = new DalList();
         public static void Main()
         {
             DataSource.startDataSource();
             int choice;
+            IDal IDalVariable = new DalList();
             Console.WriteLine("Enter a number 1-3 or 0 to exit:");
             int.TryParse(Console.ReadLine(), out choice);
 
@@ -48,9 +48,6 @@ namespace DalTest
 
             Console.WriteLine("Enter your choice :");
             int choiceForProduct;
-            //DalProduct p = new DalProduct();
-            //Products p2=new Products();
-            IDal IDalVariable = new DalList();
             int parse;
             double parse2;
             int.TryParse(Console.ReadLine(), out parse);
@@ -124,10 +121,7 @@ namespace DalTest
                         break;
                     }
                 case 3:
-                    foreach (IEnumerable<Products> myProduct in IDalVariable.product.GetAll())
-                    {
-                        Console.WriteLine(myProduct);
-                    }
+                    Console.WriteLine(IDalVariable.product.GetAll());
                     break;
                 case 4://delete
                     Console.WriteLine("Enter an Id of product:");
@@ -204,7 +198,7 @@ namespace DalTest
             int.TryParse(Console.ReadLine(), out parse);
             choiceForOrder = parse;
 
-            IDal IDalVariable = new DalList();
+            
             //DalOrders o = new Dal.DalOrders();
             switch (choiceForOrder)
             {
@@ -239,10 +233,8 @@ namespace DalTest
                     break;
 
                 case 3:
-                    foreach (IEnumerable<Orders> myOrder in IDalVariable.order.GetAll())
-                    {
-                        Console.WriteLine(myOrder);
-                    }
+                   
+                    Console.WriteLine(IDalVariable.order.GetAll());
                     break;
 
                 case 4://delete
@@ -299,8 +291,6 @@ namespace DalTest
             int choiceOrderItem;
             int.TryParse(Console.ReadLine(), out parse);
             choiceOrderItem = parse;
-            IDal IDalVariable = new DalList();
-           // DalOrderItem OI = new DalOrderItem();
             switch (choiceOrderItem)
             {
                 case 1://add

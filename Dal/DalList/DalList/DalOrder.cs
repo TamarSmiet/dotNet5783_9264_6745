@@ -5,6 +5,8 @@ using System.Net;
 using System.Xml.Linq;
 using static Dal.DataSource;
 
+
+
 namespace Dal
 {
     internal class DalOrder:IOrders
@@ -20,7 +22,8 @@ namespace Dal
            
             if(ordersList.Contains(order))
             {
-                throw new Exception("order allready exists");
+                throw new Exceptions.ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = order.ToString() };
+              
             }
             
 
@@ -46,7 +49,7 @@ namespace Dal
                     return;
                 }
             }
-            throw new Exception("vfgvfbvf");
+            throw new Exceptions.RequestedItemNotFoundException("item not found") { RequestedItemNotFound=oId.ToString() };
         }
        
         /// <summary>
@@ -79,7 +82,9 @@ namespace Dal
                     return ordersList[i];
                 }
             }
-            throw new Exception("order with this id does not exist!");
+            throw new Exceptions.RequestedItemNotFoundException("order with this id does not exist!") { RequestedItemNotFound = oId.ToString() };
+
+          
         }
 
 
