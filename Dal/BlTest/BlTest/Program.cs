@@ -47,6 +47,9 @@ namespace BlTest
             }
         }
 
+
+
+
         static void productMethod()
         {
             int choiceForProduct;
