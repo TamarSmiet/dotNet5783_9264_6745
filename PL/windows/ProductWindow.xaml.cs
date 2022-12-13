@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace PL.windows
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
+            
             BO.Product product = new BO.Product
             {
                 Id= Convert.ToInt32(BoxForId.Text),
@@ -67,10 +68,33 @@ namespace PL.windows
                 AmountInStock= Convert.ToInt32(BoxForAmount.Text)
             };
             if(button.Content=="Add")
-                bl.Product.AddProduct(product);
+            {
+                try
+                {
+                    
+                    bl.Product.AddProduct(product);
+                    
+                }
+                catch (Exception exeption)
+                {
+                    MessageBox.Show(exeption.ToString()); 
+                }
+            }
+                
             else if(button.Content=="Update")
-                bl.Product.UpdateProduct(product);
-            new ProductListWindow().Show();
+            {
+                try
+                {
+                    bl.Product.UpdateProduct(product);
+                    
+                }
+                catch (Exception exeption)
+                {
+                    MessageBox.Show(exeption.ToString());
+                }
+            }
+            this.Close();
+            new ProductListWindow().ShowDialog();
 
         }
     }
