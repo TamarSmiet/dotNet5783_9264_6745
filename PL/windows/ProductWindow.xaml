@@ -1,0 +1,26 @@
+﻿<Window x:Class="PL.windows.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.windows"
+        mc:Ignorable="d"
+        Title="ProductWindow" Height="640" Width="800">
+    <Grid Margin="0,0,0,-16">
+        <Label x:Name="ID" Content="Id:" HorizontalAlignment="Left" Margin="70,80,0,0" FontWeight="SemiBold" VerticalAlignment="Top" />
+        <TextBox x:Name="BoxForId" BorderBrush="SkyBlue"  HorizontalAlignment="Left" Margin="140,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="Name" Content="Name:" HorizontalAlignment="Left" Margin="70,120,0,0" FontWeight="SemiBold" VerticalAlignment="Top" />
+        <TextBox x:Name="BoxForName" BorderBrush="SkyBlue"  HorizontalAlignment="Left" Margin="140,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="Price" Content="Price:" HorizontalAlignment="Left" Margin="70,160,0,0" FontWeight="SemiBold" VerticalAlignment="Top" />
+        <TextBox x:Name="BoxForPrice" BorderBrush="SkyBlue"   HorizontalAlignment="Left" Margin="140,165,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="BoxForPrice_TextChanged"/>
+        <Label x:Name="Category" Content="Category:" HorizontalAlignment="Left" Margin="70,200,0,0" FontWeight="SemiBold" VerticalAlignment="Top" />
+        <ComboBox x:Name="categorySelector"  Margin="140,205,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  />
+        <Label x:Name="Amount_in_stock" Content="In Stock:" HorizontalAlignment="Left" Margin="70,240,0,0" FontWeight="SemiBold" VerticalAlignment="Top" />
+        <TextBox x:Name="BoxForAmount" BorderBrush="SkyBlue"  HorizontalAlignment="Left" Margin="140,245,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="button" Content="Button" BorderBrush="SkyBlue" Background="LightBlue"   HorizontalAlignment="Left" Margin="90,300,0,0" FontWeight="SemiBold" VerticalAlignment="Top" Height="40" Width="60" Click="button_Click"/>
+
+
+
+
+    </Grid>
+</Window>
