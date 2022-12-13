@@ -117,8 +117,7 @@ internal class Product:IProduct
         {
             throw new TheOperationFailed("couldnt add product");
         }
-        
-
+       
     }
 
     public void RemoveProduct(int id)
