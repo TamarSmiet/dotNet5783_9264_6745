@@ -62,7 +62,6 @@ namespace PL.windows
         {
             string button = "Add";
             new ProductWindow(button).Show();
-            
         }
 
         private void updateProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)   
