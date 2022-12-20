@@ -11,8 +11,10 @@ namespace BlTest
 {
     public class Program
     {
-        private static readonly IBl blVariable = new Bl();
-        private static IBl blVariableFromMethod = new Bl();
+        //private static readonly IBl blVariable = new Bl();
+        private static readonly BlApi.IBl? blVariable = BlApi.Factory.Get();
+        //private static IBl blVariableFromMethod = new Bl();
+        private static BlApi.IBl? blVariableFromMethod = BlApi.Factory.Get();
         static Cart cart = new Cart() { Orders = new List<BO.OrderItem>() { } };//Creating an instance of a cart
         static Cart tmpCart = new Cart();
         static private Product product = new Product();

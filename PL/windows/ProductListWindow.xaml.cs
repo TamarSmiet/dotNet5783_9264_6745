@@ -1,5 +1,4 @@
-﻿using BlApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BL;
 using BO;
-using BlImplementation;
 using System.CodeDom;
 using static BO.Enums;
 
@@ -25,7 +23,8 @@ namespace PL.windows
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private IBl bl = new Bl();
+        
+        BlApi.IBl? bl = BlApi.Factory.Get();
         public enum clear { getAllCategories };
         public ProductListWindow()
         {

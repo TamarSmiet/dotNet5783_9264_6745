@@ -13,12 +13,16 @@ namespace DalTest
         static private Products product = new Products();
         static private Orders order = new Orders();
         static private OrderItem orderItem = new OrderItem();
-        static IDal IDalVariable = new DalList();
+        //static IDal IDalVariable = new DalList();
+        static DalApi.IDal? IDalVariable =DalApi.Factory.Get();
+       //static IDal? IDalVariable = Factory.Get();
+
         public static void Main()
         {
             DataSource.startDataSource();
             int choice;
-            IDal IDalVariable = new DalList();
+            //IDal IDalVariable = new DalList();
+            //IDal? IDalVariable = Factory.Get();
             Console.WriteLine("Enter a number 1-3 or 0 to exit:");
             int.TryParse(Console.ReadLine(), out choice);
 

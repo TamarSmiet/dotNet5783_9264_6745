@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Runtime.ConstrainedExecution;
-//using static DalList.DataSource;
 using DO;
 
 namespace DO;

@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-using Dal;
 using DalApi;
 using System;
 using System.Collections.Generic;
@@ -14,9 +13,9 @@ namespace BlImplementation;
 
 internal class Order : IOrder
 {
-    IDal Dal = new DalList();
+    DalApi.IDal? Dal = DalApi.Factory.Get();
 
-   public IEnumerable<BO.OrderForList> GetOrders()
+    public IEnumerable<BO.OrderForList> GetOrders()
     {
         IEnumerable<DO.Orders?> ordersFromDal = Dal.order.GetAll();
         List<BO.OrderForList> orderForLists = new List<BO.OrderForList>();

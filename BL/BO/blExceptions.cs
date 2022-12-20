@@ -8,23 +8,6 @@ using DO;
 
 namespace BO
 {
-    //public class blExceptions:Exception
-    //{
-    //    public blExceptions(string message) : base(message) { }
-    //    public blExceptions(string message,Exception ex) : base(message,ex) { }
-    //}
-
-    //public class UnvalidID: Exception
-    //{
-    //    public UnvalidID() : base("The id you entered isn't valid") { }
-    //}
-    //public class NotFound : blExceptions
-    //{
-    //    public NotFound() : base("entity not found") { }
-    //}
-
-
-
     public class InvalidValueException : Exception
     {
         public InvalidValueException(string message, Exception inner): base(message, inner) { }

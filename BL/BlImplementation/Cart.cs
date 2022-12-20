@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-using Dal;
 using DalApi;
 using DO;
+
 
 namespace BlImplementation;
 
 internal class Cart:ICart
 {
-    IDal Dal = new DalList();
+    DalApi.IDal? Dal = DalApi.Factory.Get();
 
     public BO.Cart AddProductToCart(BO.Cart cart, int id)
     {
@@ -25,7 +25,6 @@ internal class Cart:ICart
         items=cart.Orders!;
         try
         {
-            //IEnumerable<OrderItem> orderItems = IDalVariable.OrderItem.GetAll(item => item.OrderID == ID);
             getP = Dal.product.Get(product=> product!.Value._productId == id);
         }
         catch (DO.Exceptions.RequestedItemNotFoundException ex)
@@ -78,7 +77,6 @@ internal class Cart:ICart
     public BO.Cart UpdateProductInCart(BO.Cart cart, int id, int newAmount)
     {
         DO.Products getP = new DO.Products();
-        //DO.OrderItem orderItem = new DO.OrderItem();
         BO.OrderItem productInCart = new BO.OrderItem(); 
         try
         {
@@ -97,14 +95,7 @@ internal class Cart:ICart
                     break;
                 }
         }
-        //try
-        //{
-        //    orderItem = Dal.orderItem.Get(product => product!.Value._productId == id);
-        //}
-        //catch (DO.Exceptions.RequestedItemNotFoundException ex)
-        //{
-        //    throw new BO.NotFound("order item not found", ex);
-        //}
+        
        
         if(newAmount> productInCart.AmountItems)
         {

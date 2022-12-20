@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-using Dal;
 using DalApi;
 using DO;
 
@@ -13,8 +12,7 @@ namespace BlImplementation;
 
 internal class Product:IProduct
 {
-    IDal Dal = new DalList();
-
+    DalApi.IDal? Dal = DalApi.Factory.Get();
     public IEnumerable<BO.ProductForList> GetProducts()
     {
         IEnumerable<DO.Products?> productListFromDo = Dal.product.GetAll();
@@ -89,18 +87,6 @@ internal class Product:IProduct
     public void AddProduct(BO.Product p)
     {
         IEnumerable<DO.Products?> productListFromDo = Dal.product.GetAll();
-
-        //if (p.Id < 0)
-        //    throw new BO.InvalidValueException("not valid id");
-        //else if (p.Name == "")
-        //    throw new BO.InvalidValueException("not valid name");
-        //    throw new Exception();
-        //else if (p.Price < 0)
-        //    throw new BO.InvalidValueException("not valid price");
-        //else if (p.AmountInStock < 0)
-        //   throw new BO.InvalidValueException("not valid amount in stock");
-        //else if (productListFromDo.Contains(Dal.product.Get(p.Id)))
-        //    throw new Exception();
         DO.Products newProduct = new DO.Products()
         {
             _productId = p.Id,

@@ -14,11 +14,7 @@ namespace DO
 
             public RequestedItemNotFoundException(string msg) : base(msg)
             {
-                //לשאול בנות מה הן הוסיפו פה
-                //RequestedItemNotFound
-
-                //throw new RequestedItemNotFoundException("ערך זה לא נמצא")
-                //{ RequestedItemNotFound = val.ToString()};
+               
 
             }
 
@@ -31,10 +27,17 @@ namespace DO
 
             public ItemAlreadyExistsException(string msg) : base(msg)
             {
-                //לשאול בנות מה הן הוסיפו פה
-                //ItemAlreadyExists
+                
             }
         }
+
+        [Serializable]
+        public class DalConfigException : Exception
+        {
+            public DalConfigException(string msg) : base(msg) { }
+            public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
+        }
+
 
     }
 }

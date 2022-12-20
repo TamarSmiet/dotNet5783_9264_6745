@@ -8,11 +8,11 @@ using DO;
 
 namespace Dal
 {
-    sealed public class DalList:IDal
+    sealed internal class DalList:IDal
     {
-        
+        private DalList() { }
+        public static IDal Instance { get; } = new DalList();
 
-        //לא יודעת האם זה כאן......?
         public IProducts product => new DalProduct();
 
 
