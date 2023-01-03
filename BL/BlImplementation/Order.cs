@@ -1,8 +1,10 @@
 ﻿using BlApi;
 using BO;
 using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,22 +21,33 @@ internal class Order : IOrder
     {
         IEnumerable<DO.Orders?> ordersFromDal = Dal.order.GetAll();
         List<BO.OrderForList> orderForLists = new List<BO.OrderForList>();
-       
-        foreach (DO.Orders? order in ordersFromDal)
-        {
-            BO.OrderForList? orderForListToAdd = new BO.OrderForList();
-            if (order!=null)
-            {
-                orderForListToAdd.Id = order.Value._orderId;
-                orderForListToAdd.Name = order.Value._customerName;
-                orderForListToAdd.Status = findStatus(order.Value);
-                orderForListToAdd.AmountProducts = findAmountOfItems(order.Value._orderId);
-                orderForListToAdd.TotalPrice = findTotalPrice(order.Value._orderId);
-                orderForLists.Add(orderForListToAdd);
-            }
+
+        var ordersList = ordersFromDal
+                       .Where(order => order != null)
+                       .Select(order => new BO.OrderForList()
+                       {
+                            Id = order.Value._orderId,
+                            Name = order.Value._customerName,
+                            Status = findStatus(order.Value),
+                            AmountProducts = findAmountOfItems(order.Value._orderId),
+                            TotalPrice = findTotalPrice(order.Value._orderId)
+                       });
+
+        //foreach (DO.Orders? order in ordersFromDal)
+        //{
+        //    BO.OrderForList? orderForListToAdd = new BO.OrderForList();
+        //    if (order!=null)
+        //    {
+        //        orderForListToAdd.Id = order.Value._orderId;
+        //        orderForListToAdd.Name = order.Value._customerName;
+        //        orderForListToAdd.Status = findStatus(order.Value);
+        //        orderForListToAdd.AmountProducts = findAmountOfItems(order.Value._orderId);
+        //        orderForListToAdd.TotalPrice = findTotalPrice(order.Value._orderId);
+        //        orderForLists.Add(orderForListToAdd);
+        //    }
             
-        }
-        return orderForLists;
+        //}
+        return ordersList;
     }
     private StatusOrder findStatus(DO.Orders order)
     {
@@ -48,16 +61,20 @@ internal class Order : IOrder
     private int findAmountOfItems(int orderID)
     {
         IEnumerable<DO.OrderItem?> orderItems = Dal.orderItem.GetAll();
-        int amountOfItems = 0;
-        foreach (DO.OrderItem? orderItem in orderItems)
-        {
-            if(orderItem!=null)
-                if (orderItem.Value._id == orderID)
-                {
-                    amountOfItems++;
-                }
-        }
-        return amountOfItems;
+
+        var count = orderItems
+            .Count(orderItem => orderItem != null && orderItem.Value._id == orderID);
+            
+           
+        //foreach (DO.OrderItem? orderItem in orderItems)
+        //{
+        //    if(orderItem!=null)
+        //        if (orderItem.Value._id == orderID)
+        //        {
+        //            amountOfItems++;
+        //        }
+        //}
+        return count;
     }
 
     private double findTotalPrice(int orderID)
@@ -194,23 +211,37 @@ internal class Order : IOrder
 
     private List<BO.OrderItem?> getOrderItem(IEnumerable<DO.OrderItem?> OrderItemsDal)
     {
-        List<BO.OrderItem?> OrderItemsBL = new List<BO.OrderItem?>();
-       
-        foreach (DO.OrderItem? orderItem in OrderItemsDal)
-        {
-            BO.OrderItem orderItemBL = new BO.OrderItem();
-            if (orderItem != null)
-            {
-                 orderItemBL.Id = orderItem.Value._id;
-                 orderItemBL.Name = Dal.product.Get(order => order!.Value._productId == orderItem.Value._productId)._productName;
-                 orderItemBL.IdOrderItem = orderItem.Value._productId;
-                 orderItemBL.Price = orderItem.Value._pricePerUnit;
-                 orderItemBL.AmountItems = orderItem.Value._quantity;
-                 orderItemBL.TotalPriceItem = orderItem.Value._pricePerUnit * orderItem.Value._quantity;
+        ////List<BO.OrderItem?> OrderItemsBL = new List<BO.OrderItem?>();
+        var OrderItemsBL = OrderItemsDal
+                      .Where(orderItem => orderItem != null)
+                      
+                      .Select(orderItem => new BO.OrderItem()
+                      {
+
+                          Id = orderItem.Value._id,
+                          Name = Dal.product.Get(order => order!.Value._productId == orderItem.Value._productId)._productName,
+                          IdOrderItem = orderItem.Value._productId,
+                          Price = orderItem.Value._pricePerUnit,
+                          AmountItems = orderItem.Value._quantity,
+                          TotalPriceItem = orderItem.Value._pricePerUnit * orderItem.Value._quantity
+
+                      });
+
+        //foreach (DO.OrderItem? orderItem in OrderItemsDal)
+        //{
+        //    BO.OrderItem orderItemBL = new BO.OrderItem();
+        //    if (orderItem != null)
+        //    {
+        //         orderItemBL.Id = orderItem.Value._id;
+        //         orderItemBL.Name = Dal.product.Get(order => order!.Value._productId == orderItem.Value._productId)._productName;
+        //         orderItemBL.IdOrderItem = orderItem.Value._productId;
+        //         orderItemBL.Price = orderItem.Value._pricePerUnit;
+        //         orderItemBL.AmountItems = orderItem.Value._quantity;
+        //         orderItemBL.TotalPriceItem = orderItem.Value._pricePerUnit * orderItem.Value._quantity;
          
-                 OrderItemsBL.Add(orderItemBL);
-            }
-        }
-        return OrderItemsBL;
+        //         OrderItemsBL.Add(orderItemBL);
+        //    }
+        //}
+        return OrderItemsBL.ToList();
     }
 }

@@ -78,16 +78,18 @@ namespace Dal
             {
                 productListCopy.Add(productsList[i]);
             }
-
-            foreach (Products? product in productListCopy)
-            {
-                if (predict!=null&&predict(product))
-                {
+             return (from Products ? product in productListCopy
+                      where predict != null && predict(product)
+                      select (Products)product!).FirstOrDefault();
+            //foreach (Products? product in productListCopy)
+            //{
+            //    if (predict!=null&&predict(product))
+            //    {
         
-                    return(Products)product!;
-                }
+            //        return(Products)product!;
+            //    }
 
-            }
+            //}
             throw new Exceptions.RequestedItemNotFoundException("product with there ids does not exist!");
 
         }
@@ -102,18 +104,24 @@ namespace Dal
             List<Products?> productsListCopy = new List<Products?>();
             if (predict == null)
             {
-                foreach (Products? product in productsList)
-                {
-                    productsListCopy.Add(product);
-                }
+                productsListCopy = (from Products? product in productsList
+                                    select product).ToList();
+                //foreach (Products? product in productsList)
+                //{
+                //    productsListCopy.Add(product);
+                //}
             }
+
             else
             {
-                foreach (Products? product in productsList)
-                {
-                    if (predict(product))
-                        productsListCopy.Add(product);
-                }
+                productsListCopy = (from Products? product in productsList
+                                    where predict(product)
+                                    select product).ToList();
+                //foreach (Products? product in productsList)
+                //{
+                //    if (predict(product))
+                //        productsListCopy.Add(product);
+                //}
             }
             return productsListCopy;
         }

@@ -110,7 +110,7 @@ namespace DalTest
                 case 2://display
                     {
                         Console.WriteLine("Enter an Id of product:");
-                        //צריך פו את זה 
+                       
                         int.TryParse(Console.ReadLine(), out parse);
                         product._productId = parse;
 
@@ -126,7 +126,12 @@ namespace DalTest
                         break;
                     }
                 case 3:
-                    Console.WriteLine(IDalVariable.product.GetAll());
+                    foreach (Products? product in IDalVariable.product.GetAll())
+                    {
+                        if (product != null)
+                            Console.WriteLine(product);
+                    }
+                    //Console.WriteLine(IDalVariable.product.GetAll());
                     break;
                 case 4://delete
                     Console.WriteLine("Enter an Id of product:");
@@ -239,8 +244,12 @@ namespace DalTest
                     break;
 
                 case 3:
+                    foreach (Orders? order in IDalVariable.order.GetAll())
+                    {
+                        if (order != null)
+                            Console.WriteLine(order);
+                    }
                    
-                    Console.WriteLine(IDalVariable.order.GetAll());
                     break;
 
                 case 4://delete

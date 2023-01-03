@@ -13,46 +13,71 @@ namespace BlImplementation;
 internal class Product:IProduct
 {
     DalApi.IDal? Dal = DalApi.Factory.Get();
-    public IEnumerable<BO.ProductForList> GetProducts()
+    //public IEnumerable<BO.ProductForList> GetProducts()
+    public IEnumerable<BO.ProductForList?> GetProducts()
     {
         IEnumerable<DO.Products?> productListFromDo = Dal.product.GetAll();
-        List<BO.ProductForList> tempList = new List<BO.ProductForList>();
-        
-        foreach (DO.Products? product in productListFromDo)
-        {
-            BO.ProductForList temp = new BO.ProductForList();
-            if (product != null)
-            {
-                temp.Id = product.Value._productId;
-                temp.Price = product.Value._price;
-                temp.Name = product.Value._productName;
-                temp.Category = (BO.Enums.eCategory?)product.Value._category;
-                tempList.Add(temp);
-            }
+        //List<BO.ProductForList> tempList = new List<BO.ProductForList>();
 
-            
-        }
-        return tempList;
+        var productsList = from DO.Products? product in productListFromDo
+                           where product != null 
+                           orderby product.Value._price ascending
+                           select new BO.ProductForList()
+                           {
+                               Id = product.Value._productId,
+                               Price = product.Value._price,
+                               Name = product.Value._productName,
+                               Category = (BO.Enums.eCategory?)product.Value._category
+                           };
+                     
+                     
+              
+        return productsList.ToList();
+        //foreach (DO.Products? product in productListFromDo)
+        //{
+        //    BO.ProductForList temp = new BO.ProductForList();
+        //    if (product != null)
+        //    {
+        //        temp.Id = product.Value._productId;
+        //        temp.Price = product.Value._price;
+        //        temp.Name = product.Value._productName;
+        //        temp.Category = (BO.Enums.eCategory?)product.Value._category;
+        //        tempList.Add(temp);
+        //    }
+
+        //}
+        //return tempList;
     }
 
     public IEnumerable<BO.ProductForList> GetProductByCategory(BO.Enums.eCategory category)
     {
         IEnumerable<DO.Products?> productListFromDo = Dal.product.GetAll(item => (BO.Enums.eCategory)item!.Value._category! == category);
-        List<BO.ProductForList> tempList = new List<BO.ProductForList>();
+        //List<BO.ProductForList> tempList = new List<BO.ProductForList>();
         
-        foreach (DO.Products? product in productListFromDo)
-        {
-            BO.ProductForList temp = new BO.ProductForList();
-            if (product != null)
-            {
-                temp.Id = product.Value._productId;
-                temp.Price = product.Value._price;
-                temp.Name = product.Value._productName;
-                temp.Category = (BO.Enums.eCategory?)product.Value._category;
-                tempList.Add(temp);
-            }
-        }
-        return tempList;
+        var productList =productListFromDo
+                        .Where(product => product != null)
+                        .Select (product => new BO.ProductForList()
+                        {
+                            Id = product.Value._productId,
+                            Price = product.Value._price,
+                            Name = product.Value._productName,
+                            Category = (BO.Enums.eCategory?)product.Value._category
+                        })
+                        .OrderBy(product=>product.Price);
+
+        //foreach (DO.Products? product in productListFromDo)
+        //{
+        //    BO.ProductForList temp = new BO.ProductForList();
+        //    if (product != null)
+        //    {
+        //        temp.Id = product.Value._productId;
+        //        temp.Price = product.Value._price;
+        //        temp.Name = product.Value._productName;
+        //        temp.Category = (BO.Enums.eCategory?)product.Value._category;
+        //        tempList.Add(temp);
+        //    }
+        //}
+        return productList;
     }
     
     public BO.Product GetProduct(int id)

@@ -96,15 +96,20 @@ namespace Dal
             {
                 ordersListCopy.Add(ordersList[i]);
             }
-
-            foreach (Orders? order in ordersListCopy)
+            if (predict != null)
             {
-                if (predict!=null && predict(order))
-                {
-                    return (Orders)order!;   
-                }
- 
+                return ordersListCopy
+                      .Where(order => predict(order))
+                      .Select(order => (Orders)order!).First();
             }
+            //foreach (Orders? order in ordersListCopy)
+            //{
+            //    if (predict!=null && predict(order))
+            //    {
+            //        return (Orders)order!;   
+            //    }
+ 
+            //}
             throw new Exceptions.RequestedItemNotFoundException("order with this id does not exist!") { };
 
 
@@ -132,18 +137,23 @@ namespace Dal
             List<Orders?> ordersListCopy = new List<Orders?>();
             if (predict == null)
             {
-                foreach (Orders? order in ordersList)
-                {
-                        ordersListCopy.Add(order);
-                }
+                ordersListCopy = (from Orders? order in ordersList
+                                  select order).ToList();
+                //foreach (Orders? order in ordersList)
+                //{
+                //        ordersListCopy.Add(order);
+                //}
             }
             else
             {
-                foreach (Orders? order in ordersList)
-                {
-                    if (predict(order))
-                        ordersListCopy.Add(order);
-                }
+                ordersListCopy = (from Orders? order in ordersList
+                                  where predict(order)
+                                  select order).ToList();
+                //foreach (Orders? order in ordersList)
+                //{
+                //    if (predict(order))
+                //        ordersListCopy.Add(order);
+                //}
             }
             return ordersListCopy;
         }
