@@ -15,13 +15,18 @@ using System.Windows.Shapes;
 namespace PL.windows
 {
     /// <summary>
-    /// Logique d'interaction pour Manager.xaml
+    /// Interaction logic for ThanksForYourOrderWindow.xaml
     /// </summary>
-    public partial class Manager : Window
+    public partial class ThanksForYourOrderWindow : Window
     {
-        public Manager()
+        //public  string CustomerName { get; set; }
+        public string Thanks { get; set; }
+        public ThanksForYourOrderWindow(string name)
         {
+            //CustomerName= name;
+            Thanks = $@"{name}, thanks for your order!";
             InitializeComponent();
+           
         }
     }
 }

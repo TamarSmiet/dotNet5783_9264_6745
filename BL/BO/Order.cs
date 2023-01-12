@@ -19,18 +19,27 @@ public class Order
     public DateTime? DeliveryDate { get; set; }
     public List<OrderItem?>? ItemList { get; set; }
     public double TotalPrice { get; set; }
-
-    public override string ToString() => $@"
-    Order ID={Id}: {CustomerName}, 
-    Email - {Email}
-    Adress: {Address}
-    Status of order:{OrderStatus}
-    Order Date: {PlaceOrderDate}
-    Ship Date: {ExpeditionDate}
-    Delivery Date: {DeliveryDate}
-    List of Item:{ItemList.Count}
-    Total sum:{TotalPrice}
+    public override string ToString()
+    {
+        string item = "";
+        if (ItemList != null)
+        {
+            foreach (OrderItem? orderItem in ItemList)
+            {
+                item += orderItem.ToString();
+            }
+        }
+        return
+        $@"  Order ID={Id}: {CustomerName}, 
+        Email - {Email}
+        Adress: {Address}
+        Status of order:{OrderStatus}
+        Order Date: {PlaceOrderDate}
+        Ship Date: {ExpeditionDate}
+        Delivery Date: {DeliveryDate}
+        List of Item:{item}
+        Total sum:{TotalPrice}";
+    }
     
-";
 
 }

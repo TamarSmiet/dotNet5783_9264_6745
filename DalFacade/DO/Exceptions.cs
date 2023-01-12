@@ -30,6 +30,15 @@ namespace DO
                 
             }
         }
+        public class InputNotValidException : Exception
+        {
+            public string NotValidInput { get; set; }
+
+            public InputNotValidException(string msg) : base(msg)
+            {
+
+            }
+        }
 
         [Serializable]
         public class DalConfigException : Exception

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
@@ -29,13 +30,13 @@ internal class Cart:ICart
         }
         catch (DO.Exceptions.RequestedItemNotFoundException ex)
         {
-            throw new BO.NotFound("product not found", ex);
+            throw new BO.NotFound(ex.Message);
         }
 
 
         foreach (var item in items)
             if (item!.Id == id)
-                {
+            {
                     if (getP._amountInStock > 0)
                     {
                         item.AmountItems++;
@@ -45,13 +46,16 @@ internal class Cart:ICart
                     }
                     else
                         throw new BO.InvalidValueException("not valid amount in stock");
-                }
-        
+            }
+
+       
 
         IEnumerable<DO.Products?> productListFromDo = Dal.product.GetAll();
 
         BO.OrderItem orderItemToAdd = new BO.OrderItem()
         {
+            
+           
             Id = id,
             Name = getP._productName,
             Price = getP._price,
@@ -61,16 +65,21 @@ internal class Cart:ICart
         foreach (DO.Products? p in productListFromDo)
             if (p != null)
             {
-                if (p.Value._productId == id && p.Value._amountInStock > 0)
+                if (p.Value._productId == id )
                 {
-                    cart.Orders!.Add(orderItemToAdd);
-                    double num= p.Value._price + cart.TotalPriceCart;
-                    cart.TotalPriceCart = num;
-                    return cart;
+                    if (p.Value._amountInStock > 0)
+                    {
+                        cart.Orders!.Add(orderItemToAdd);
+                        double num = p.Value._price + cart.TotalPriceCart;
+                        cart.TotalPriceCart = num;
+                        
+                    }
+                    else
+                        throw new BO.InvalidValueException("you cant add this product, not enought in stock!");
                 }
-
-            } 
-        throw new BO.InvalidValueException("not valid id or amount in stock");
+                
+            }
+        return cart;
 
     }
 
@@ -102,7 +111,7 @@ internal class Cart:ICart
             foreach (BO.OrderItem? item in cart.Orders!)
                 if (item!.Id == id)
                 {
-                    if (getP._amountInStock > 0)
+                    if (getP._amountInStock > newAmount)
                     {
                         int amountToAdd = newAmount - item.AmountItems;
                         item.AmountItems+= amountToAdd;
@@ -111,6 +120,16 @@ internal class Cart:ICart
                     }
                     else
                         throw new BO.InvalidValueException("not valid amount in stock");
+                }
+        }
+        if (newAmount == 0)
+        {
+            foreach (BO.OrderItem? item in cart.Orders!)
+                if (item!.Id == id)
+                {
+                    cart.Orders.ToList().Remove(item);
+                    double priceToReduce = item.AmountItems * item.Price;
+                    cart.TotalPriceCart -= priceToReduce;
                 }
         }
         if (newAmount < productInCart.AmountItems)
@@ -124,16 +143,7 @@ internal class Cart:ICart
                     cart.TotalPriceCart -= amountToReduce * item.Price;
                 }
         }
-        if(newAmount==0)
-        {
-            foreach (BO.OrderItem? item in cart.Orders!)
-                if (item!.Id == id)
-                {
-                    cart.Orders.ToList().Remove(item);
-                    double priceToReduce = item.AmountItems*item.Price;
-                    cart.TotalPriceCart -= priceToReduce;
-                }
-        }
+       
         return cart;
     }
     private bool IsValid(string email)
@@ -145,10 +155,13 @@ internal class Cart:ICart
     }
     public void PlaceOrder(BO.Cart cart)
     {
-
-        if (cart.CustomerName == "")
+        Regex regex1 = new Regex("^[a-zA-Z]+$");
+        Regex regex2 = new Regex("^[0-9]+$");
+        //bool hasNum = regex2.IsMatch(cart.CustomerName)||regex2.IsMatch(cart.Address);
+        double totalPrice = 0;
+        if (cart.CustomerName == "" || regex2.IsMatch(cart.CustomerName))
             throw new BO.InvalidValueException("not valid name");
-        if (cart.Address == "")
+        if (cart.Address == "" || regex2.IsMatch(cart.Address))
             throw new BO.InvalidValueException("not valid address");
         if (cart.Email==null || !IsValid(cart.Email))
             throw new BO.InvalidValueException("not valid email");
@@ -165,9 +178,10 @@ internal class Cart:ICart
             }
             
             if (getP._amountInStock<item!.AmountItems)
-                throw new BO.InvalidValueException("not valid amont - Not enough in stock");
+                throw new BO.InvalidValueException("not valid amount - Not enough in stock");
             if (item.AmountItems < 0)
                 throw new BO.InvalidValueException("not valid amount");
+            totalPrice += item.TotalPriceItem;
         }
         DO.Orders newOrder = new DO.Orders()
         {
@@ -176,7 +190,9 @@ internal class Cart:ICart
             _address = cart.Address,
             _orderDate = DateTime.Now,
             _shippingDate =DateTime.MinValue,
-            _deliveryDate=DateTime.MinValue
+            _deliveryDate=DateTime.MinValue,
+            
+           
         };
         int orderId;
         try
@@ -193,7 +209,7 @@ internal class Cart:ICart
             DO.OrderItem newOrderItem = new DO.OrderItem()
             {
                 _orderId= orderId,
-                _productId=item!.IdOrderItem,
+                _productId=item!.Id,
                 _pricePerUnit=item.Price,
                 _quantity=item.AmountItems
             };
@@ -210,6 +226,7 @@ internal class Cart:ICart
         foreach (BO.OrderItem? item in cart.Orders)
         {
             DO.Products product = new DO.Products();
+            product = Dal.product.Get(p=> p.Value._productId==item.Id);
             product._amountInStock -= item!.AmountItems;
             try
             {

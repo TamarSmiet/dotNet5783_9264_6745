@@ -1,0 +1,33 @@
+﻿<Window x:Class="PL.windows.ItemInCartToUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.windows"
+        xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+        mc:Ignorable="d"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="ItemInCartToUpdateWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <!--<Label Content="mkjnhbgvgbhjn" Margin="0,0,450,300" Width="100" Height="30"/>-->
+        <!--<Label Content="{Binding ItemInCartToUpdate.category}" Margin="0,0,450,220"  Width="100" Height="30"/>
+        <Label Content="{Binding ItemInCartToUpdate.price}" Margin="0,0,450,150"  Width="100" Height="30"/>-->
+        <Label Content="{Binding ItemInCartToUpdate.Name}"  Margin="70,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Width="100" Height="30"/>
+        <Label Content="{Binding ItemInCartToUpdate.Price}" Margin="70,150,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"   Width="100" Height="30"/>
+        <Label Content="Amount in your cart: " Height="30" Margin="70,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <Label Content="{Binding ItemInCartToUpdate.AmountItems}" Margin="200,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Width="100" Height="30"/>
+        <Button Content="+" Width="20" Height="20" Margin="250,185,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Plus_Click"/>
+        <Button Content="-" Width="20" Height="20" Margin="280,185,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Minus_Click"/>
+        <Label Content="{Binding amountOfItemsToAdd}" Width="20" Height="30" Margin="310,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <Label Content="Total price" Margin="70,210,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Height="30"/>
+        <Label Content="{Binding ItemInCartToUpdate.TotalPriceItem}" Margin="200,210,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Width="100" Height="30"/>
+        <Button Content="update" Margin="80,270,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Width="100" Height="30" Click="UpdateItemCart_Click"/>
+
+        <!--<Label Content="Amount in your cart: " Height="30" Margin="125,202,540,202"/>
+        <Label Content="{Binding ItemInCartToUpdate.AmountItemInCart }" Margin="0,0,170,0"  Width="100" Height="30"/>-->
+
+
+
+    </Grid>
+</Window>

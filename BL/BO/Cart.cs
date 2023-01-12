@@ -17,12 +17,25 @@ public class Cart
     public  List<OrderItem?>? Orders { get; set; }=new List<OrderItem?>();
     public double TotalPriceCart { get; set; }
 
-    public override string ToString() => $@"
-    Name: {CustomerName}, 
-    Email - {Email}
-    Adress: {Address}
-    List of Item:{Orders.ToString()}
-    Total sum:{TotalPriceCart}
-";
+    public override string ToString()
+    {
+        string item = "";
+        if(Orders!=null)
+        {
+            foreach (OrderItem oi in Orders)
+                item += oi;
+                    
+        }
+        return 
+        $@"
+        Name: {CustomerName}, 
+        Email - {Email}
+        Adress: {Address}
+        List of Item:{item}
+        Total sum:{TotalPriceCart}
+        ";
+    }
+    
+
 
 }

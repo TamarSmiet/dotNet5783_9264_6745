@@ -9,7 +9,7 @@ namespace BO;
 public class Enums
 {
     public enum eCategory { kitchen, house, cellular, hair };
-    public enum CategoriesForComboBox {getAllCategories, kitchen, house, cellular, hair }
+    //public enum CategoriesForComboBox {getAllCategories, kitchen, house, cellular, hair }
     public enum StatusOrder { OrderCommited, OrderShipped, OrderDelivered };
 
 }

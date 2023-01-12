@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static BO.Enums;
+using static DO.Exceptions;
 
 namespace BlImplementation;
 
@@ -33,28 +34,15 @@ internal class Order : IOrder
                             TotalPrice = findTotalPrice(order.Value._orderId)
                        });
 
-        //foreach (DO.Orders? order in ordersFromDal)
-        //{
-        //    BO.OrderForList? orderForListToAdd = new BO.OrderForList();
-        //    if (order!=null)
-        //    {
-        //        orderForListToAdd.Id = order.Value._orderId;
-        //        orderForListToAdd.Name = order.Value._customerName;
-        //        orderForListToAdd.Status = findStatus(order.Value);
-        //        orderForListToAdd.AmountProducts = findAmountOfItems(order.Value._orderId);
-        //        orderForListToAdd.TotalPrice = findTotalPrice(order.Value._orderId);
-        //        orderForLists.Add(orderForListToAdd);
-        //    }
-            
-        //}
+       
         return ordersList;
     }
     private StatusOrder findStatus(DO.Orders order)
     {
         StatusOrder status = StatusOrder.OrderCommited;
-        if (order._shippingDate < DateTime.Now)
+        if (order._shippingDate != DateTime.MinValue && order._shippingDate < DateTime.Now)
             status = StatusOrder.OrderShipped;
-        if (order._deliveryDate < DateTime.Now)
+        if  (order._deliveryDate!=DateTime.MinValue && order._deliveryDate < DateTime.Now )
             status = StatusOrder.OrderDelivered;
         return status;
     }
@@ -63,17 +51,8 @@ internal class Order : IOrder
         IEnumerable<DO.OrderItem?> orderItems = Dal.orderItem.GetAll();
 
         var count = orderItems
-            .Count(orderItem => orderItem != null && orderItem.Value._id == orderID);
-            
-           
-        //foreach (DO.OrderItem? orderItem in orderItems)
-        //{
-        //    if(orderItem!=null)
-        //        if (orderItem.Value._id == orderID)
-        //        {
-        //            amountOfItems++;
-        //        }
-        //}
+            .Count(orderItem => orderItem != null && orderItem.Value._orderId == orderID);
+        
         return count;
     }
 
@@ -106,6 +85,14 @@ internal class Order : IOrder
             throw new BO.NotFound("order not found", ex);
         }
         IEnumerable<DO.OrderItem?> OrderItemsDal = new List<DO.OrderItem?>();
+        try
+        {
+            OrderItemsDal = Dal.orderItem.GetAll(item => item!.Value._orderId == id);
+        }
+        catch(DO.Exceptions.RequestedItemNotFoundException ex)
+        {
+            throw new BO.NotFound("items not found", ex);
+        }
         BO.Order order = new BO.Order()
         {
             Id = id,
@@ -166,65 +153,72 @@ internal class Order : IOrder
     }
     public BO.OrderTracking trackingOrder(int id)
     {
+        DO.Orders updateOForDal;
         if (id < 0)
             throw new BO.InvalidValueException("not valid id");
-        DO.Orders updateOForDal = Dal.order.Get(order => order!.Value._orderId == id);
-        List<BO.DescriptionStatusDate?> listOfStatus = new List<BO.DescriptionStatusDate?>(); 
-        for(int i=0;i<3;i++)
+        try
         {
-            BO.DescriptionStatusDate status = new BO.DescriptionStatusDate();
-            if(i==0)
+            updateOForDal = Dal.order.Get(order => order!.Value._orderId == id);
+            List<BO.DescriptionStatusDate?> listOfStatus = new List<BO.DescriptionStatusDate?>();
+            for (int i = 0; i < 3; i++)
             {
-                status.Date = updateOForDal._orderDate;
-                status.Description = "The order was created";
-                listOfStatus.Add(status);
-            }
-            if(i==1)
-            {
-                if(updateOForDal._shippingDate < DateTime.Now)
+                BO.DescriptionStatusDate status = new BO.DescriptionStatusDate();
+                if (i == 0)
                 {
-                    status.Date = updateOForDal._shippingDate;
-                    status.Description = "The order was sent";
+                    status.Date = updateOForDal._orderDate;
+                    status.Description = "The order was created";
                     listOfStatus.Add(status);
                 }
-                
-            }
-            if(i==2)
-            {
-                if (updateOForDal._deliveryDate < DateTime.Now)
+                if (i == 1)
                 {
-                    status.Date= updateOForDal._deliveryDate;
-                    status.Description = "The order was deliveried";
-                    listOfStatus.Add(status);
-                }
-            }
-        }
-        BO.OrderTracking orderTracking = new BO.OrderTracking()
-        {
-            Id= id, 
-            Status=findStatus(updateOForDal),
-            DescriptionStatus=listOfStatus
+                    if (updateOForDal._shippingDate < DateTime.Now)
+                    {
+                        status.Date = updateOForDal._shippingDate;
+                        status.Description = "The order was sent";
+                        listOfStatus.Add(status);
+                    }
 
-        };
-        return orderTracking;
+                }
+                if (i == 2)
+                {
+                    if (updateOForDal._deliveryDate < DateTime.Now)
+                    {
+                        status.Date = updateOForDal._deliveryDate;
+                        status.Description = "The order was deliveried";
+                        listOfStatus.Add(status);
+                    }
+                }
+            }
+            BO.OrderTracking orderTracking = new BO.OrderTracking()
+            {
+                Id = id,
+                Status = findStatus(updateOForDal),
+                DescriptionStatus = listOfStatus
+
+            };
+            return orderTracking;
+        }
+        catch (RequestedItemNotFoundException ex)
+        {
+            throw new BO.InvalidValueException(ex.Message);
+        }
+
+       
     }
 
     private List<BO.OrderItem?> getOrderItem(IEnumerable<DO.OrderItem?> OrderItemsDal)
     {
         ////List<BO.OrderItem?> OrderItemsBL = new List<BO.OrderItem?>();
         var OrderItemsBL = OrderItemsDal
-                      .Where(orderItem => orderItem != null)
-                      
+                      .Where(orderItem => orderItem != null )  
                       .Select(orderItem => new BO.OrderItem()
                       {
-
                           Id = orderItem.Value._id,
                           Name = Dal.product.Get(order => order!.Value._productId == orderItem.Value._productId)._productName,
-                          IdOrderItem = orderItem.Value._productId,
+                          IdOrder = orderItem.Value._orderId,
                           Price = orderItem.Value._pricePerUnit,
                           AmountItems = orderItem.Value._quantity,
                           TotalPriceItem = orderItem.Value._pricePerUnit * orderItem.Value._quantity
-
                       });
 
         //foreach (DO.OrderItem? orderItem in OrderItemsDal)

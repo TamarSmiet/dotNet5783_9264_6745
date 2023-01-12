@@ -29,8 +29,11 @@ namespace PL
             InitializeComponent();
         }
 
-        private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
+        private void ShowManagerWindow_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
 
+        private void ShowNewOrderWindow_Click(object sender, RoutedEventArgs e) => new CatalogWindow().Show();
 
+        private void ShowTrackOrderWindow_Click(object sender, RoutedEventArgs e) => new OrderTrackingWindow().Show();
+        
     }
 }

@@ -19,7 +19,7 @@ namespace Dal
 
             }
             orderItemsList.Add( orderItem);
-            return orderItem._id;
+            return Config.idOrder;
 
         }
 
@@ -153,19 +153,12 @@ namespace Dal
             {
                 orderItemsListCopy =(from OrderItem? orderI in orderItemsList
                                      select orderI).ToList();
-                //foreach (OrderItem? orderIten in orderItemsList)
-                //{
-                //    orderItemsListCopy.Add(orderIten);
-                //}
+              
             }
             else
             {
                 
-                //foreach (OrderItem? order in orderItemsList)
-                //{
-                //    if (predict(order))
-                //        orderItemsListCopy.Add(order);
-                //}
+              
                 orderItemsListCopy =(from OrderItem? orderI in orderItemsList
                                      where predict(orderI)
                                      select orderI).ToList();
@@ -175,26 +168,6 @@ namespace Dal
 
 
 
-        //public IEnumerable<Orders> GetAll(Func<Orders, bool>? predict = null)
-        //{
-        //    List<Orders> ordersListCopy = new List<Orders>();
-        //    if (predict == null)
-        //    {
-        //        foreach (Orders order in ordersList)
-        //        {
-        //            ordersListCopy.Add(order);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        foreach (Orders order in ordersList)
-        //        {
-        //            if (predict(order))
-        //                ordersListCopy.Add(order);
-        //        }
-        //    }
-        //    return ordersListCopy;
-        //}
     }
 }
 

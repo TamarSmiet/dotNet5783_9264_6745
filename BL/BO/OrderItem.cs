@@ -8,7 +8,7 @@ namespace BO;
 
 public class OrderItem
 {
-    public int IdOrderItem { get; set; }
+    public int IdOrder { get; set; }
     public int Id { get; set; }
     public string? Name { get; set; }
     public double Price { get; set; }
@@ -17,7 +17,7 @@ public class OrderItem
 
     public override string ToString() => $@"
     item number={Id}
-    Order Item ID={IdOrderItem}
+    Order ID={IdOrder}
     name={Name}:
     Price: {Price}
     Amount : {AmountItems}

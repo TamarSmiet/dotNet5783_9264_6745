@@ -15,6 +15,6 @@ public class OrderTracking
     public override string ToString() => $@"
     Order tracking ID={Id}
     Status:{Status}
-
+    
 ";
 }

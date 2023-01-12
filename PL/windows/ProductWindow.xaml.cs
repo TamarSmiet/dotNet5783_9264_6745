@@ -17,7 +17,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 
-
 namespace PL.windows
 {
     /// <summary>
@@ -26,30 +25,30 @@ namespace PL.windows
     public partial class ProductWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-
-        public ProductWindow(string buttonName)
+        public Product product
         {
+            get { return (Product)GetValue(productProperty); }
+            set { SetValue(productProperty, value); }
+        } 
+        public static DependencyProperty productProperty =
+            DependencyProperty.Register("product", typeof(Product), typeof(ProductWindow));
+        public System.Array categories { get; set; } = Enum.GetValues(typeof(BO.Enums.eCategory));
+        public string buttonContent { get; set; }
+        private Action<ProductForList> action;
+        
+        public ProductWindow(string buttonName, Action<ProductForList> action)
+        {
+            buttonContent = buttonName;
+            product=new Product();
             InitializeComponent();
-            button.Content = buttonName;
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.eCategory));
-            
+            this.action= action;
         }
-        public ProductWindow(BO.ProductForList product)
+        public ProductWindow(int id, Action<ProductForList> action)
         {
-            
+            buttonContent = "Update";
+            product = bl.Product.GetProduct(id);
             InitializeComponent();
-            
-            button.Content = "Update";
-            BoxForId.IsReadOnly=true;
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.eCategory));
-            BoxForId.Text = product.Id.ToString();
-            BoxForName.Text = product.Name;
-            BoxForPrice.Text = product.Price.ToString();
-            categorySelector.SelectedItem = product.Category;
-            BoxForAmount.Text = bl.Product.GetProduct(product.Id).AmountInStock.ToString();
-
-
-            //categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.eCategory));
+            this.action= action;
         }
         private void BoxForPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -59,72 +58,50 @@ namespace PL.windows
         private void button_Click(object sender, RoutedEventArgs e)
         {
             bool isAddedOrUpdated = true;
-            Regex regex1 = new Regex("^[a-zA-Z]+$");
-            Regex regex2 = new Regex("^[0-9]+$");
-            bool hasAlpha = regex1.IsMatch(BoxForPrice.Text)|| regex1.IsMatch(BoxForAmount.Text);
-            bool hasNum=regex2.IsMatch(BoxForName.Text);
-            if (hasAlpha == true)
-            {
-                MessageBox.Show("its need only numbers");
-            }
-            if(hasNum == true)
-            {
-                MessageBox.Show("name needs only letters");
-            }
-            BO.Product product = new BO.Product();
-            //{
-            //    Id= Convert.ToInt32(BoxForId.Text),
-            //    Name= BoxForName.Text,
-            //    Price= Convert.ToDouble(BoxForPrice.Text),
-            //    Category= (BO.Enums.eCategory)categorySelector.SelectedItem,
-            //    AmountInStock= Convert.ToInt32(BoxForAmount.Text)
-            //};
-            if(button.Content=="Add")
-            {
-                try
-                {
-                    product.Id = Convert.ToInt32(BoxForId.Text);
-                    product.Name = BoxForName.Text;
-                    product.Price = Convert.ToDouble(BoxForPrice.Text);
-                    product.Category = (BO.Enums.eCategory)categorySelector.SelectedItem;
-                    product.AmountInStock = Convert.ToInt32(BoxForAmount.Text);
-                    bl.Product.AddProduct(product);
+            
+            
+                if(buttonContent=="Add")
+                { 
                     
-                }
-                catch (Exception exeption)
-                {
-                    MessageBox.Show("couldnt add!\n" + exeption.ToString());
-                    isAddedOrUpdated=false;
-                }
+                    try
+                    {
+                        int id = bl.Product.AddProduct(product);
+                        action(bl.Product.GetProductForList(id));
+                    
+                    }
+                    catch (BO.InvalidValueException exeption)
+                    {
+                        MessageBox.Show("couldnt add!\n" + exeption.ToString());
+                        isAddedOrUpdated=false;
+                    }
 
-            }
+                }
                 
-            else if(button.Content=="Update")
-            {
+                else if(buttonContent =="Update")
+                {
 
-                try
-                {
-                    product.Id = Convert.ToInt32(BoxForId.Text);
-                    product.Name = BoxForName.Text;
-                    product.Price = Convert.ToDouble(BoxForPrice.Text);
-                    product.Category = (BO.Enums.eCategory)categorySelector.SelectedItem;
-                    product.AmountInStock = Convert.ToInt32(BoxForAmount.Text);
-                    bl.Product.UpdateProduct(product);
+                    try
+                    {
+                        bl.Product.UpdateProduct(product);
+                        action(bl.Product.GetProductForList(product.Id));
                     
+                    }
+                    catch (BO.InvalidValueException exeption)
+                    {
+                        MessageBox.Show("couldnt update!\n" + exeption.ToString());
+                        isAddedOrUpdated=false;
+                    }
                 }
-                catch (Exception exeption)
+                if (isAddedOrUpdated)
                 {
-                    MessageBox.Show("couldnt update!\n" + exeption.ToString());
-                    isAddedOrUpdated=false;
+                    this.Close();
                 }
-            }
-            if (isAddedOrUpdated)
-            {
-                this.Close();
-                new ProductListWindow().ShowDialog();
-            }
+           
+            
                
 
         }
+
+        
     }
 }

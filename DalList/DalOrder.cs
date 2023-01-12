@@ -4,8 +4,7 @@ using DalApi;
 using System.Net;
 using System.Xml.Linq;
 using static Dal.DataSource;
-
-
+using static DO.Exceptions;
 
 namespace Dal
 {
@@ -26,7 +25,7 @@ namespace Dal
 
             }
 
-
+            order._orderId = Config.IdOrder;
             order._orderDate = DateTime.Now;
             order._shippingDate = DateTime.MinValue;
             order._deliveryDate = DateTime.MinValue;
@@ -67,71 +66,37 @@ namespace Dal
             }
         }
 
-        /// <summary>
-        /// get a specific order by id
-        /// </summary>
-        /// <param name="oId">get the id of the order to return</param>
-        /// <returns>return the order object</returns>
-        /// <exception cref="Exception">in case that didn't found the id in the array</exception>
-        //public Orders? Get(int oId)
-        //{
-        //    //Orders order;
-        //    for (int i = 0; i < ordersList.Count; i++)
-        //    {
-        //        if (ordersList[i]?._orderId == oId)
-        //        {
-        //            return ordersList[i];
-        //        }
-        //    }
-        //    throw new Exceptions.RequestedItemNotFoundException("order with this id does not exist!") { RequestedItemNotFound = oId.ToString() };
-
-
-        //}
+       
 
         public Orders Get(Func<Orders?, bool>? predict = null)
         {
-            //Orders order;
+            
             List<Orders?> ordersListCopy = new List<Orders?>();
-            for(int i = 0; i < ordersList.Count; i++)
+            Orders order = new Orders(); 
+            for (int i = 0; i < ordersList.Count; i++)
             {
                 ordersListCopy.Add(ordersList[i]);
             }
             if (predict != null)
             {
-                return ordersListCopy
-                      .Where(order => predict(order))
-                      .Select(order => (Orders)order!).First();
+                try
+                {
+                    order= ordersListCopy
+                            .Where(order => predict(order))
+                            .Select(order => (Orders)order!).First();
+                }
+                catch
+                {
+                    throw new RequestedItemNotFoundException("order with this id does not exist!");
+                }   
             }
-            //foreach (Orders? order in ordersListCopy)
-            //{
-            //    if (predict!=null && predict(order))
-            //    {
-            //        return (Orders)order!;   
-            //    }
- 
-            //}
-            throw new Exceptions.RequestedItemNotFoundException("order with this id does not exist!") { };
 
+            return order;
 
         }
 
 
-        /// <summary>
-        /// get all the orders of the array
-        /// </summary>
-        /// <returns>return an array with all the orders</returns>*
-        /// 
-
-        //public IEnumerable<Orders> GetAll()
-        //{
-        //    List<Orders> ordersListToReturn =new ();
-        //    for(int i = 0; i < ordersList.Count; i++)
-        //    {
-        //        ordersListToReturn.Add(ordersList[i]);
-        //    }
-        //    return ordersListToReturn;
-
-        //}
+        
         public IEnumerable<Orders?> GetAll(Func<Orders?, bool>? predict = null)
         {
             List<Orders?> ordersListCopy = new List<Orders?>();
@@ -139,21 +104,14 @@ namespace Dal
             {
                 ordersListCopy = (from Orders? order in ordersList
                                   select order).ToList();
-                //foreach (Orders? order in ordersList)
-                //{
-                //        ordersListCopy.Add(order);
-                //}
+                
             }
             else
             {
                 ordersListCopy = (from Orders? order in ordersList
                                   where predict(order)
                                   select order).ToList();
-                //foreach (Orders? order in ordersList)
-                //{
-                //    if (predict(order))
-                //        ordersListCopy.Add(order);
-                //}
+               
             }
             return ordersListCopy;
         }

@@ -1,0 +1,14 @@
+﻿<Window x:Class="PL.windows.ProductViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.windows"
+        mc:Ignorable="d"
+        Title="ProductViewWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Label Content="{Binding productToView}"  />
+        <Button Content="Add to cart" Click="AddProductToCart_Click" Width="70" Height="40" Margin="-100,-100,0,0"/>
+    </Grid>
+</Window>

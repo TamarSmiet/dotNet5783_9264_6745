@@ -31,10 +31,7 @@ public static class DataSource
         internal static int idProductOfIdOrderItem = 1;
         internal static int IdProductOfIdOrderItem { get { return idProductOfIdOrderItem++; } }
 
-        //האינדקס פו הוא בשביל מספר רץ לבדוק מה עושים עם זה
-        //public static int IdOrderOfIdOrderItem { get { return num.Next(indexOrders); } }
-
-        //public static int IdProductOfIdOrderItem { get { return num.Next(indexProducts); } }
+     
 
     }
     static DataSource()
@@ -44,7 +41,7 @@ public static class DataSource
     private static void addOrder(Orders order)
     {
         ordersList.Add(order);
-        //ordersArr[Config.indexOrders++] = order;
+       
     }
 
     static private void addOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress)
@@ -63,13 +60,14 @@ public static class DataSource
     private static void addProduct(Products product)
     {
         productsList.Add(product);  
-        //productsArr[Config.indexProducts++] = product;
+
+        
     }
 
     private static void addOrderItem(OrderItem orderItem)
     {
         orderItemsList.Add(orderItem);
-        //orderItemsArr[Config.indexOrderItems++] = orderItem;
+       
     }
 
     private static void s_Initialize()
@@ -80,21 +78,22 @@ public static class DataSource
         addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
         addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
 
-        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Oven", _price = 2000, _category = Enums.eCategory.kitchen, _amountInStock = 70 });
-        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Stove", _price = 500, _category = Enums.eCategory.kitchen, _amountInStock = 100 });
-        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Refrigirator", _price = 3000, _category = Enums.eCategory.kitchen, _amountInStock = 50 });
-        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Vacuum Cleaner", _price = 500, _category = Enums.eCategory.house, _amountInStock = 60 });
-        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Kettle", _price = 150, _category = Enums.eCategory.house, _amountInStock = 150 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Phone Samsung", _price = 2000, _category = Enums.eCategory.cellular, _amountInStock = 70 });
+        addProduct(new DO.Products() {_productId = Config.IdProduct, _productName = "Hair Brush", _price = 350, _category = Enums.eCategory.hair, _amountInStock = 100 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Phone Nokia", _price = 1500, _category = Enums.eCategory.cellular, _amountInStock = 50 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Babyliss", _price = 200, _category = Enums.eCategory.hair, _amountInStock = 60 });
+        addProduct(new DO.Products() { _productId =  Config.IdProduct, _productName = "Phone Apple", _price = 3500, _category = Enums.eCategory.cellular, _amountInStock = 150 });
 
         addOrder("Esther Bat Zion Levinson",  "ebzlevinson@gmail.com", "Haroe 20/2");
         addOrder("Tamar Smietanski",  "tamarsmiet@gmail.com",  "Haroe 20/2");
         addOrder("Israel Israeli", "israel@gmail.com", "buksboim 12");
         addOrder("Avraham Cohen", "avic@gmail.com", "tlalim 21");
+        addOrder(new DO.Orders() { _orderId = Config.IdOrder, _customerName = "Itschak", _email = "I@gmail.com", _address = "my address", _orderDate = DateTime.MinValue, _shippingDate = DateTime.MinValue, _deliveryDate = DateTime.MinValue });
 
 
-        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = 100001, _pricePerUnit = 2000, _quantity = 1 });
-        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = 100002, _pricePerUnit = 500, _quantity = 1 });
-        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = Config.IdOrderOfIdOrderItem, _productId = 100003, _pricePerUnit = 3000, _quantity = 2 });
+        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = 1, _productId = 100001, _pricePerUnit = 2000, _quantity = 1 });
+        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = 2, _productId = 100002, _pricePerUnit = 500, _quantity = 1 });
+        addOrderItem(new DO.OrderItem() { _id = Config.IdOrderItem, _orderId = 3, _productId = 100003, _pricePerUnit = 3000, _quantity = 2 });
 
 
 

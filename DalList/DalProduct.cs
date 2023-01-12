@@ -4,6 +4,8 @@ using DalApi;
 using static Dal.DataSource;
 using System.Security.Cryptography;
 using System;
+using System.Text.RegularExpressions;
+using static DO.Exceptions;
 
 namespace Dal
 {
@@ -18,9 +20,28 @@ namespace Dal
         /// <exception cref="Exception"></exception>
         public int Add(Products product)
         {
+            
+            Regex regex1 = new Regex("^[a-zA-Z]+$");
+            Regex regex2 = new Regex("^[0-9]+$");
+            string productPrice = product._price.ToString();
+            string productAmount = product._amountInStock.ToString();
+            bool hasAlpha = regex1.IsMatch(productPrice) || regex1.IsMatch(productAmount);
+            bool hasNum = regex2.IsMatch(product._productName);
+            if (hasAlpha == true)
+            {
+                throw new InputNotValidException("price and amount must have only numbers");
+            }
+            if (hasNum == true)
+            {
+                throw new InputNotValidException("name must have only letters") ;
+            }
+            if(product._category==null)
+            {
+                throw new InputNotValidException("you must fill the category");
+            }
             if (productsList.Contains(product))
             {
-                throw new Exceptions.ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = product.ToString() };
+                throw new ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = product.ToString() };
             }
             product._productId = Config.IdProduct;
             productsList.Add(product);
@@ -106,10 +127,7 @@ namespace Dal
             {
                 productsListCopy = (from Products? product in productsList
                                     select product).ToList();
-                //foreach (Products? product in productsList)
-                //{
-                //    productsListCopy.Add(product);
-                //}
+                
             }
 
             else

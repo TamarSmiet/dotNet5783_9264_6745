@@ -21,7 +21,7 @@ public class ProductItem
     Product item ID={Id}: {Name}, 
     category - {category}
     Price: {price}
-    Amount in stock: {IsInStock}
+    in stock: {IsInStock}
     Amout in your cart:{AmountItemInCart}
 ";
 
