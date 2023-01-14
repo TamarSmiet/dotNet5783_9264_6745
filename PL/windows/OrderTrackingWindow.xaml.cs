@@ -44,7 +44,7 @@ namespace PL.windows
         }
 
         // Using a DependencyProperty as the backing store for OrderTracking orderTracking.  This enables animation, styling, binding, etc...
-        public DependencyProperty orderTrackingProperty =
+        public static readonly DependencyProperty orderTrackingProperty =
             DependencyProperty.Register("OrderTracking orderTracking", typeof(OrderTracking), typeof(OrderUpdateWindow));
 
         public OrderTrackingWindow()
