@@ -113,11 +113,13 @@ internal class Order : IOrder
         DO.Orders updateOForDal = Dal.order.Get(order => order!.Value._orderId == id);
         BO.Order updateOForBL = GetOrder(id);
 
-        if (updateOForDal._shippingDate==DateTime.MinValue)
-        {  
+        if (updateOForDal._shippingDate == DateTime.MinValue)
+        {
             updateOForDal._shippingDate = DateTime.Now;
             updateOForBL.ExpeditionDate = DateTime.Now;
         }
+        else
+            throw new BO.TheOperationFailed("The date already updated!");
         try
         {
             Dal.order.Update(updateOForDal);
@@ -135,11 +137,13 @@ internal class Order : IOrder
             throw new BO.InvalidValueException("not valid id");
         DO.Orders updateOForDal = Dal.order.Get(order => order!.Value._orderId == id);
         BO.Order updateOForBL = GetOrder(id);
-        if (updateOForDal._deliveryDate==DateTime.MinValue&& updateOForDal._shippingDate<DateTime.Now)
+        if (updateOForDal._deliveryDate == DateTime.MinValue && updateOForDal._shippingDate < DateTime.Now)
         {
-            updateOForDal._deliveryDate= DateTime.Now;
-            updateOForBL.DeliveryDate= DateTime.Now;
+            updateOForDal._deliveryDate = DateTime.Now;
+            updateOForBL.DeliveryDate = DateTime.Now;
         }
+        else
+            throw new BO.TheOperationFailed("The date already updated!");
         try
         {
             Dal.order.Update(updateOForDal);

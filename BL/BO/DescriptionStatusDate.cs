@@ -14,6 +14,6 @@ public class DescriptionStatusDate
     public string? Description { get; set; }
 
     public override string ToString() => $@"
-    Date: {Date} - Description: {Description}
+    {Date} - {Description}
 ";
 }
