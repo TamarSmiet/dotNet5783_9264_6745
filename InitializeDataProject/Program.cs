@@ -26,9 +26,9 @@ public class Program
     static Program()
     {
         s_Initialize();
-        initializeProductData();
-        initializeOrderData();
-        initializeOrderItemData();
+        //initializeProductData();
+        //initializeOrderData();
+        //initializeOrderItemData();
     }
     //DO.Products product;
     //List<DO.Products> list;
@@ -114,28 +114,28 @@ public class Program
     }
   
       
-    private static void initializeProductData()
-    {
-        FileStream fs = new FileStream(@"C:\Users\צרצוש\source\repos\ebzLevinson\dotNet5783_9264_6745\whithLinqs\xml\Products.xml", FileMode.OpenOrCreate);
-        XmlSerializer xs = new XmlSerializer(typeof(List<DO.Products>));
-        xs.Serialize(fs, productsList);
-        fs.Close();
-    }
+    //private static void initializeProductData()
+    //{
+    //    FileStream fs = new FileStream(@"C:\Users\צרצוש\source\repos\ebzLevinson\dotNet5783_9264_6745\whithLinqs\xml\Products.xml", FileMode.OpenOrCreate);
+    //    XmlSerializer xs = new XmlSerializer(typeof(List<DO.Products>));
+    //    xs.Serialize(fs, productsList);
+    //    fs.Close();
+    //}
 
-    private static void initializeOrderData()
-    {
-        FileStream fs = new FileStream(@"C:\Users\צרצוש\source\repos\ebzLevinson\dotNet5783_9264_6745\whithLinqs\xml\Orders.xml", FileMode.OpenOrCreate);
-        XmlSerializer xs = new XmlSerializer(typeof(List<DO.Orders>));
-        xs.Serialize(fs, ordersList);
-        fs.Close();
-    }
+    //private static void initializeOrderData()
+    //{
+    //    FileStream fs = new FileStream(@"C:\Users\צרצוש\source\repos\ebzLevinson\dotNet5783_9264_6745\whithLinqs\xml\Orders.xml", FileMode.OpenOrCreate);
+    //    XmlSerializer xs = new XmlSerializer(typeof(List<DO.Orders>));
+    //    xs.Serialize(fs, ordersList);
+    //    fs.Close();
+    //}
 
-    private static void initializeOrderItemData()
-    {
-        FileStream fs = new FileStream(@"C:\Users\צרצוש\source\repos\ebzLevinson\dotNet5783_9264_6745\whithLinqs\xml\OrderItem.xml", FileMode.OpenOrCreate);
-        XmlSerializer xs = new XmlSerializer(typeof(List<DO.OrderItem>));
-        xs.Serialize(fs, orderItemsList);
-        fs.Close();
-    }
+    //private static void initializeOrderItemData()
+    //{
+    //    FileStream fs = new FileStream(@"C:\Users\צרצוש\source\repos\ebzLevinson\dotNet5783_9264_6745\whithLinqs\xml\OrderItem.xml", FileMode.OpenOrCreate);
+    //    XmlSerializer xs = new XmlSerializer(typeof(List<DO.OrderItem>));
+    //    xs.Serialize(fs, orderItemsList);
+    //    fs.Close();
+    //}
 
 }
