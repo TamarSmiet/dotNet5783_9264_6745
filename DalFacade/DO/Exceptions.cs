@@ -46,6 +46,14 @@ namespace DO
             public DalConfigException(string msg) : base(msg) { }
             public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
         }
+        //try to add exeption for xml
+        //public class XMLFileLoadCreateException : Exception
+        //{
+        //    public XMLFileLoadCreateException(string msg) : base(msg) { }
+        //    public XMLFileLoadCreateException(string msg, Exception ex) : base(msg, ex) { }
+        //}
+
+
 
 
     }

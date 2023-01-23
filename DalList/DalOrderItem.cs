@@ -97,14 +97,7 @@ namespace Dal
                    where predict != null && predict(orderItem)
                    select (OrderItem)orderItem!).FirstOrDefault();
 
-            //foreach (OrderItem? orderItem in orderItemListCopy)
-            //{
-            //    if (predict!=null&&predict(orderItem))
-            //    {
-            //        return (OrderItem)orderItem!;
-            //    }
-
-            //}
+           
             throw new Exceptions.RequestedItemNotFoundException("order item with there ids does not exist!") { };
         }
 
