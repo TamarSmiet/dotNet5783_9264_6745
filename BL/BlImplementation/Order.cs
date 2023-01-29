@@ -21,7 +21,6 @@ internal class Order : IOrder
     public IEnumerable<BO.OrderForList> GetOrders()
     {
         IEnumerable<DO.Orders?> ordersFromDal = Dal.order.GetAll();
-        List<BO.OrderForList> orderForLists = new List<BO.OrderForList>();
 
         var ordersList = ordersFromDal
                        .Where(order => order != null)
@@ -32,7 +31,7 @@ internal class Order : IOrder
                             Status = findStatus(order.Value),
                             AmountProducts = findAmountOfItems(order.Value._orderId),
                             TotalPrice = findTotalPrice(order.Value._orderId)
-                       });
+                       }).ToList();
 
        
         return ordersList;

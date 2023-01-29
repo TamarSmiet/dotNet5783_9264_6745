@@ -66,13 +66,13 @@ namespace Dal
             }
         }
 
-       
+
 
         public Orders Get(Func<Orders?, bool>? predict = null)
         {
-            
+
             List<Orders?> ordersListCopy = new List<Orders?>();
-            Orders order = new Orders(); 
+            Orders order = new Orders();
             for (int i = 0; i < ordersList.Count; i++)
             {
                 ordersListCopy.Add(ordersList[i]);
@@ -81,14 +81,14 @@ namespace Dal
             {
                 try
                 {
-                    order= ordersListCopy
+                    order = ordersListCopy
                             .Where(order => predict(order))
                             .Select(order => (Orders)order!).First();
                 }
                 catch
                 {
                     throw new RequestedItemNotFoundException("order with this id does not exist!");
-                }   
+                }
             }
 
             return order;
@@ -96,7 +96,7 @@ namespace Dal
         }
 
 
-        
+
         public IEnumerable<Orders?> GetAll(Func<Orders?, bool>? predict = null)
         {
             List<Orders?> ordersListCopy = new List<Orders?>();
@@ -104,14 +104,14 @@ namespace Dal
             {
                 ordersListCopy = (from Orders? order in ordersList
                                   select order).ToList();
-                
+
             }
             else
             {
                 ordersListCopy = (from Orders? order in ordersList
                                   where predict(order)
                                   select order).ToList();
-               
+
             }
             return ordersListCopy;
         }

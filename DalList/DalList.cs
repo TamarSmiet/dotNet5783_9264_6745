@@ -8,7 +8,7 @@ using DO;
 
 namespace Dal
 {
-    sealed internal class DalList:IDal
+    sealed internal class DalList : IDal
     {
         private DalList() { }
         public static IDal Instance { get; } = new DalList();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DO;
 namespace DalApi
 {
-    public interface IOrderItem:ICrud<OrderItem>
+    public interface IOrderItem:ICrud<DO.OrderItem>
     {
         
     }

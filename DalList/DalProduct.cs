@@ -20,7 +20,7 @@ namespace Dal
         /// <exception cref="Exception"></exception>
         public int Add(Products product)
         {
-            
+
             Regex regex1 = new Regex("^[a-zA-Z]+$");
             Regex regex2 = new Regex("^[0-9]+$");
             string productPrice = product._price.ToString();
@@ -33,9 +33,9 @@ namespace Dal
             }
             if (hasNum == true)
             {
-                throw new InputNotValidException("name must have only letters") ;
+                throw new InputNotValidException("name must have only letters");
             }
-            if(product._category==null)
+            if (product._category == null)
             {
                 throw new InputNotValidException("you must fill the category");
             }
@@ -93,16 +93,16 @@ namespace Dal
         /// <exception cref="Exception">in case he didn't found the product</exception>
         public Products Get(Func<Products?, bool>? predict = null)
         {
-            
+
             List<Products?> productListCopy = new List<Products?>();
             for (int i = 0; i < productsList.Count; i++)
             {
                 productListCopy.Add(productsList[i]);
             }
-             return (from Products ? product in productListCopy
-                      where predict != null && predict(product)
-                      select (Products)product!).FirstOrDefault();
-            
+            return (from Products? product in productListCopy
+                    where predict != null && predict(product)
+                    select (Products)product!).FirstOrDefault();
+
             throw new RequestedItemNotFoundException("product with there ids does not exist!");
 
         }
@@ -119,7 +119,7 @@ namespace Dal
             {
                 productsListCopy = (from Products? product in productsList
                                     select product).ToList();
-                
+
             }
 
             else

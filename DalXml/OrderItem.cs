@@ -12,39 +12,85 @@ using System.Security.Cryptography;
 
 namespace Dal
 {
-    internal class OrderItem:IOrderItem
+    internal class OrderItem : IOrderItem
     {
         string orderItemPath = @"OrderItem.xml"; //XElement
-
-        public OrderItem Get(Func<OrderItem?, bool>? predict = null)
+       
+        public DO.OrderItem Get(Func<DO.OrderItem?, bool>? predict = null)
         {
-            List<OrderItem> ListOrderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
-            OrderItem orderItem= ListOrderItems.Find(oi=>predict(oi));
-            if(orderItem != null)
+            List<DO.OrderItem?> ListOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemPath);
+            DO.OrderItem? orderItem = ListOrderItems.Find(oi => predict(oi));
+            if (orderItem != null)
             {
-                return orderItem;
+                return (DO.OrderItem)orderItem;
             }
             else
                 throw new Exceptions.RequestedItemNotFoundException("order item with this id does not exist!");
 
-            
+
 
         }
 
-        public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predict = null)
+        private DO.OrderItem? _convertFromXMLToProduct(XElement x)
         {
-            List<OrderItem> ListOrderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
+           
+            DO.OrderItem orderItem = new()
+            {
+                //ID = 10 Order ID:1 Product ID: 100001 Price: 2000 Amount of product: 1
+                _id = int.Parse(x.Element("_id")!.Value.ToString()),
+                _orderId = int.Parse(x.Element("_orderId").Value.ToString()),
+                _productId=int.Parse(x.Element("_productId").Value.ToString()),
+                _pricePerUnit=double.Parse(x.Element("_pricePerUnit").Value.ToString()),
+                _quantity=int.Parse(x.Element("_quantity").Value.ToString())
+            };
+            return (DO.OrderItem?)orderItem;
+        }
+        public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? predict = null)
+        {
+
+            //try
+            //{
             if (predict == null)
             {
-                return from orderI in ListOrderItems
-                       select orderI;
+                XElement ProductData = XMLTools.LoadListFromXMLElement(orderItemPath);
+                IEnumerable<DO.OrderItem?> orderItems = ProductData.Elements()
+                                              .Where(x => x != null)
+                                              .Select(x => _convertFromXMLToProduct(x)).ToList();
+                                                    
+                //IEnumerable<DO.OrderItem?> tmpProducts = (IEnumerable<DO.OrderItem?>)o.ToList();
+                if (orderItems == null) { throw new(); }
+                return orderItems;
             }
-            else
+               else
             {
-                return from orderI in ListOrderItems
-                       where predict(orderI)
-                       select orderI;
+                XElement ProductData = XMLTools.LoadListFromXMLElement(orderItemPath);
+                IEnumerable<DO.OrderItem?> orderItems = ProductData.Elements()
+                                              .Where(x => x != null)
+                                              .Select(x => _convertFromXMLToProduct(x)).ToList();
+
+                //IEnumerable<DO.OrderItem?> tmpProducts = (IEnumerable<DO.OrderItem?>)o.ToList();
+                if (orderItems == null) { throw new(); }
+                return orderItems;
             }
+                
+            //}
+            //catch (DO.XMLFileLoadCreateException ex)
+            //{
+            //    throw ex;
+            //}
+
+            //List<DO.OrderItem?> ListOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemPath);
+            //if (predict == null)
+            //{
+            //    return from orderI in ListOrderItems
+            //           select orderI;
+            //}
+            //else
+            //{
+            //    return from orderI in ListOrderItems
+            //           where predict(orderI)
+            //           select orderI;
+            //}
         }
 
         public int Add(DO.OrderItem orderItem)
@@ -56,8 +102,8 @@ namespace Dal
             XElement orderItemRootElem = XMLTools.LoadListFromXMLElement(orderItemPath);
 
             XElement orderItemToAdd = (from oi in orderItemRootElem.Elements()
-                                     where int.Parse(oi.Element("ID").Value) == orderItem._id
-                                     select oi).FirstOrDefault();
+                                       where int.Parse(oi.Element("ID").Value) == orderItem._id
+                                       select oi).FirstOrDefault();
             if (orderItemToAdd != null)
                 throw new ItemAlreadyExistsException("order item allready exists") { ItemAlreadyExists = orderItem.ToString() };
 
@@ -73,8 +119,8 @@ namespace Dal
             XElement orderItemRootElem = XMLTools.LoadListFromXMLElement(orderItemPath);
 
             XElement orderItemToUpdate = (from oi in orderItemRootElem.Elements()
-                                       where int.Parse(oi.Element("ID").Value) == orderItem._id
-                                       select oi).FirstOrDefault();
+                                          where int.Parse(oi.Element("ID").Value) == orderItem._id
+                                          select oi).FirstOrDefault();
 
             if (orderItemToUpdate != null)
             {
@@ -96,8 +142,8 @@ namespace Dal
 
             XElement orderItemRootElem = XMLTools.LoadListFromXMLElement(orderItemPath);
             XElement orderItemToDelete = (from product in orderItemRootElem.Elements()
-                                        where int.Parse(product.Element("ID").Value) == id
-                                        select product).FirstOrDefault();
+                                          where int.Parse(product.Element("ID").Value) == id
+                                          select product).FirstOrDefault();
 
             if (orderItemToDelete != null)
             {
@@ -108,14 +154,8 @@ namespace Dal
                 throw new RequestedItemNotFoundException("order item with this id does not exist!") { RequestedItemNotFound = id.ToString() };
         }
 
-        public DO.OrderItem Get(Func<DO.OrderItem?, bool>? predict = null)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? predict = null)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

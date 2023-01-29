@@ -12,7 +12,7 @@ namespace Dal
 {
     public class XMLTools
     {
-        static string dir = @"xml\";
+        static string dir = @"../xml/";
         static XMLTools()
         {
             if (!Directory.Exists(dir))
@@ -38,10 +38,11 @@ namespace Dal
                 if (File.Exists(dir + filePath))
                 {
                     return XElement.Load(dir + filePath);
+                    //dir + filePath
                 }
                 else
                 {
-                    XElement rootElem = new XElement(dir + filePath);
+                    XElement rootElem = new XElement(filePath);
                     rootElem.Save(dir + filePath);
                     return rootElem;
                 }

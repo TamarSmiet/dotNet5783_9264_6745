@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DO;
 namespace DalApi;
 
-public interface IProducts : ICrud<Products>
+public interface IProducts : ICrud<DO.Products>
 {
 
 }

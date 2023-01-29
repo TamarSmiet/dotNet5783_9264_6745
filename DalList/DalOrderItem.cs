@@ -4,7 +4,7 @@ using DO;
 using static Dal.DataSource;
 namespace Dal
 {
-    internal class DalOrderItem:IOrderItem
+    internal class DalOrderItem : IOrderItem
     {
         /// <summary>
         /// adding order item
@@ -18,7 +18,7 @@ namespace Dal
                 throw new Exceptions.ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = orderItem.ToString() };
 
             }
-            orderItemsList.Add( orderItem);
+            orderItemsList.Add(orderItem);
             return Config.idOrder;
 
         }
@@ -29,9 +29,9 @@ namespace Dal
         /// <param name="orderItem">get the new details to updatein an object orderItem</param>
         public void Update(OrderItem orderItem)
         {
-            for(int i=0;i< orderItemsList.Count; i++)
+            for (int i = 0; i < orderItemsList.Count; i++)
             {
-                if(orderItem._id== orderItemsList[i]?._id)
+                if (orderItem._id == orderItemsList[i]?._id)
                 {
                     orderItemsList[i] = orderItem;
                 }
@@ -49,7 +49,7 @@ namespace Dal
                 if (id == orderItemsList[i]?._id)
                 {
                     orderItemsList.Remove(orderItemsList[i]);
-                    return; 
+                    return;
                 }
             }
             throw new Exceptions.RequestedItemNotFoundException("item not found") { RequestedItemNotFound = id.ToString() };
@@ -71,12 +71,12 @@ namespace Dal
         //        {
         //            return new OrderItem() {_id= orderItemsList[i]?._id };
         //        }
-                
- 
+
+
         //    }
         //    throw new Exceptions.RequestedItemNotFoundException("order item with there ids does not exist!") { RequestedItemNotFound = orderId.ToString() + productId .ToString()};
 
-     
+
 
         /// <summary>
         /// get a specific order item by its id
@@ -94,10 +94,10 @@ namespace Dal
             }
 
             return (from OrderItem? orderItem in orderItemListCopy
-                   where predict != null && predict(orderItem)
-                   select (OrderItem)orderItem!).FirstOrDefault();
+                    where predict != null && predict(orderItem)
+                    select (OrderItem)orderItem!).FirstOrDefault();
 
-           
+
             throw new Exceptions.RequestedItemNotFoundException("order item with there ids does not exist!") { };
         }
 
@@ -110,7 +110,7 @@ namespace Dal
         /// <exception cref="Exception">in case there are no order item with this order id</exception>
         //public IEnumerable<OrderItem> getOrderItemByOrder(int orderId)
         //{
-           
+
         //    int count = 0;
         //    for (int i = 0; i < orderItemsList.Count; i++)
         //    {
@@ -125,7 +125,7 @@ namespace Dal
         //            if (orderId == orderItemsList[i]._orderId)
         //            {
         //                _orderItemsByOrderList.Add(orderItemsList[i])  ;
-                        
+
         //            }
         //        }
         //        return _orderItemsByOrderList;
@@ -144,17 +144,17 @@ namespace Dal
             List<OrderItem?> orderItemsListCopy = new List<OrderItem?>();
             if (predict == null)
             {
-                orderItemsListCopy =(from OrderItem? orderI in orderItemsList
-                                     select orderI).ToList();
-              
+                orderItemsListCopy = (from OrderItem? orderI in orderItemsList
+                                      select orderI).ToList();
+
             }
             else
             {
-                
-              
-                orderItemsListCopy =(from OrderItem? orderI in orderItemsList
-                                     where predict(orderI)
-                                     select orderI).ToList();
+
+
+                orderItemsListCopy = (from OrderItem? orderI in orderItemsList
+                                      where predict(orderI)
+                                      select orderI).ToList();
             }
             return orderItemsListCopy;
         }

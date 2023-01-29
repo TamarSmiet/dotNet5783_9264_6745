@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProducts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Products>
+    <_productId>10000</_productId>
+    <_productName>OvenNEW</_productName>
+    <_price>2000</_price>
+    <_category>kitchen</_category>
+    <_amountInStock>70</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10000</_productId>
+    <_productName>Oven</_productName>
+    <_price>2000</_price>
+    <_category>kitchen</_category>
+    <_amountInStock>70</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10001</_productId>
+    <_productName>Stove</_productName>
+    <_price>500</_price>
+    <_category>kitchen</_category>
+    <_amountInStock>100</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10002</_productId>
+    <_productName>Refrigirator</_productName>
+    <_price>3000</_price>
+    <_category>kitchen</_category>
+    <_amountInStock>50</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10003</_productId>
+    <_productName>Vacuum Cleaner</_productName>
+    <_price>500</_price>
+    <_category>house</_category>
+    <_amountInStock>60</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10004</_productId>
+    <_productName>KettleNEW</_productName>
+    <_price>150</_price>
+    <_category>house</_category>
+    <_amountInStock>150</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10005</_productId>
+    <_productName>Phone Samsung</_productName>
+    <_price>2000</_price>
+    <_category>cellular</_category>
+    <_amountInStock>70</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10006</_productId>
+    <_productName>Hair Brush</_productName>
+    <_price>350</_price>
+    <_category>hair</_category>
+    <_amountInStock>100</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10007</_productId>
+    <_productName>Phone Nokia</_productName>
+    <_price>1500</_price>
+    <_category>cellular</_category>
+    <_amountInStock>50</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10008</_productId>
+    <_productName>Babyliss</_productName>
+    <_price>200</_price>
+    <_category>hair</_category>
+    <_amountInStock>56</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10009</_productId>
+    <_productName>Phone Apple</_productName>
+    <_price>3500</_price>
+    <_category>cellular</_category>
+    <_amountInStock>150</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>10011</_productId>
+    <_productName>fgvhbj</_productName>
+    <_price>0</_price>
+    <_category>kitchen</_category>
+    <_amountInStock>0</_amountInStock>
+  </Products>
+</ArrayOfProducts>

@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using static DO.Exceptions;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using static DO.Enums;
 
 namespace Dal
 {
@@ -20,15 +21,15 @@ namespace Dal
         string productPath = @"Products.xml"; //XElement
 
 
-
-        public Products Get(Func<Products?, bool>? predict = null)
+        //public DO.Products? Get(Func<DO.Products?, bool>? predict = null)
+        DO.Products ICrud<DO.Products>.Get(Func<DO.Products?, bool>? predict)
         {
-            List<Products?> ListProduct = XMLTools.LoadListFromXMLSerializer<Products?>(productPath);
+            List<DO.Products?> ListProduct = XMLTools.LoadListFromXMLSerializer<DO.Products?>(productPath);
             //List<Products?> productListCopy = new List<Products?>();
             //  XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
-            Products? product = ListProduct.Find(p => predict != null && predict(p));
+            DO.Products? product = ListProduct.Find(p => predict != null && predict(p));
             if (product != null)
-                return product;
+                return (DO.Products)product;
             else
                 throw new RequestedItemNotFoundException("product with this id does not exist!");
 
@@ -38,13 +39,13 @@ namespace Dal
 
         }
 
-        public IEnumerable<Products?> GetAll(Func<Products?, bool>? predict = null)
+        public IEnumerable<DO.Products?> GetAll(Func<DO.Products?, bool>? predict = null)
         {
-            List<Products?> productRootElem = XMLTools.LoadListFromXMLSerializer<Products?>(productPath);
+            List<DO.Products?> productRootElem = XMLTools.LoadListFromXMLSerializer<DO.Products?>(productPath);
             if (predict == null)
             {
                 return (from product in productRootElem
-                                   select product).ToList();
+                        select product).ToList();
 
             }
 
@@ -53,8 +54,10 @@ namespace Dal
                 return (from product in productRootElem
                         where predict(product)
                         select product).ToList();
+       
+        
             }
-            
+
         }
 
         public void Update(DO.Products product)
@@ -62,17 +65,17 @@ namespace Dal
             //List<Products?> productRootElem = XMLTools.LoadListFromXMLSerializer<Products?>(productPath);
             XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
             XElement productToUpdate = (from p in productRootElem.Elements()
-                                        where int.Parse(p.Element("ID").Value) == product._productId
+                                        where int.Parse(p.Element("_productId").Value) == product._productId
                                         select p).FirstOrDefault();
 
             if (productToUpdate != null)
             {
-                productToUpdate.Element("ID").Value = product._productId.ToString();
-                productToUpdate.Element("Name").Value = product._productName;
-                productToUpdate.Element("Price").Value = product._price.ToString();
-                productToUpdate.Element("Category").Value = product._category.ToString();
-                productToUpdate.Element("AmountInStock").Value = product._amountInStock.ToString();
-
+                productToUpdate.Element("_productId").Value = product._productId.ToString();
+                productToUpdate.Element("_productName").Value = product._productName;
+                productToUpdate.Element("_price").Value = product._price.ToString();
+                productToUpdate.Element("_category").Value = product._category.ToString();
+                productToUpdate.Element("_amountInStock").Value = product._amountInStock.ToString();
+       
                 XMLTools.SaveListToXMLElement(productRootElem, productPath);
             }
             else
@@ -84,8 +87,8 @@ namespace Dal
         {
             XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
             XElement productToDelete = (from product in productRootElem.Elements()
-                            where int.Parse(product.Element("ID").Value) == pId
-                            select product).FirstOrDefault();
+                                        where int.Parse(product.Element("ID").Value) == pId
+                                        select product).FirstOrDefault();
 
             if (productToDelete != null)
             {
@@ -107,17 +110,26 @@ namespace Dal
             //throw new Exceptions.RequestedItemNotFoundException("product with there ids does not exist!") { RequestedItemNotFound = pId.ToString() };
 
         }
+        private static int getProductId()
+        {
+            XElement config = XMLTools.LoadListFromXMLElement(@"Config.xml");
+            int id = (int)config.Element("idProduct");
+            id++;
+            config.Element("idProduct")!.SetValue(id);
+            config.Save(@"Config.xml");
+            return id;
 
+        }
         public int Add(DO.Products product)
         {
             XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
 
 
             XElement productToAdd = (from p in productRootElem.Elements()
-                             where int.Parse(p.Element("ID").Value) == product._productId
-                             select p).FirstOrDefault();
+                                     where int.Parse(p.Element("_productId").Value) == product._productId
+                                     select p).FirstOrDefault();
 
-            if(productToAdd!=null)
+            if (productToAdd != null)
                 throw new ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = product.ToString() };
 
             Regex regex1 = new Regex("^[a-zA-Z]+$");
@@ -138,26 +150,36 @@ namespace Dal
             {
                 throw new InputNotValidException("you must fill the category");
             }
-            product._productId = Config.IdProduct;
-            XElement productElement = new XElement("Product", new XElement("ID", product._productId),
-                                    new XElement("Name", product._productName),
-                                    new XElement("Price", product._price),
-                                    new XElement("Category", product._category),
-                                    new XElement("AmountInStock", product._amountInStock));
+            product._productId = getProductId();
+            XElement productElement = new XElement("Products", new XElement("_productId", product._productId),
+                                    new XElement("_productName", product._productName),
+                                    new XElement("_price", product._price),
+                                    new XElement("_category", product._category),
+                                    new XElement("_amountInStock", product._amountInStock));
             productRootElem.Add(productElement);
 
             XMLTools.SaveListToXMLElement(productRootElem, productPath);
             return product._productId;
         }
 
-        public DO.Products Get(Func<DO.Products?, bool>? predict = null)
-        {
-            throw new NotImplementedException();
-        }
+        //DO.Products ICrud<DO.Products>.Get(Func<DO.Products?, bool>? predict)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IEnumerable<DO.Products?> GetAll(Func<DO.Products?, bool>? predict = null)
-        {
-            throw new NotImplementedException();
-        }
+        //public IEnumerable<DO.Products?> GetAll(Func<DO.Products?, bool>? predict = null)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Products Get(Func<DO.Products?, bool>? predict = null)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public IEnumerable<Products?> GetAll(Func<DO.Products?, bool>? predict = null)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

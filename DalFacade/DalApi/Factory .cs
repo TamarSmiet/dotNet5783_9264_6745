@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace DalApi;
 using System.Reflection;
 using static DalApi.DalConfig;
@@ -22,7 +21,7 @@ public static class Factory
         {
             Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             throw new DalConfigException("Failed to load {dal}.dll package");
         }
