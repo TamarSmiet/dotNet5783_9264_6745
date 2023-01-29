@@ -38,14 +38,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitializeDataProject", "In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{18431095-0968-4EF2-B9C6-7DA05BCB26A8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{D32E8905-6B92-4E55-B171-BD930DE45722}"
-	ProjectSection(SolutionItems) = preProject
-		xml\config.xml = xml\config.xml
-		xml\Order.xml = xml\Order.xml
-		xml\OrderItem.xml = xml\OrderItem.xml
-		xml\Products.xml = xml\Products.xml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
