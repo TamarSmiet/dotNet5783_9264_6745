@@ -36,12 +36,13 @@ namespace Dal
            
             DO.OrderItem orderItem = new()
             {
+                 
                 //ID = 10 Order ID:1 Product ID: 100001 Price: 2000 Amount of product: 1
                 _id = int.Parse(x.Element("_id")!.Value.ToString()),
                 _orderId = int.Parse(x.Element("_orderId").Value.ToString()),
                 _productId=int.Parse(x.Element("_productId").Value.ToString()),
                 _pricePerUnit=double.Parse(x.Element("_pricePerUnit").Value.ToString()),
-                _quantity=int.Parse(x.Element("_quantity").Value.ToString())
+                _quantity =int.Parse(x.Element("_quantity").Value.ToString())
             };
             return (DO.OrderItem?)orderItem;
         }
@@ -52,27 +53,32 @@ namespace Dal
             //{
             if (predict == null)
             {
-                XElement ProductData = XMLTools.LoadListFromXMLElement(orderItemPath);
-                IEnumerable<DO.OrderItem?> orderItems = ProductData.Elements()
-                                              .Where(x => x != null)
-                                              .Select(x => _convertFromXMLToProduct(x)).ToList();
+                List<DO.OrderItem?> ProductData = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemPath);
+                //IEnumerable<DO.OrderItem?> orderItems = ProductData
+                //                              .Where(x => x != null)
+                //                              .Select(x => _convertFromXMLToProduct(x)).ToList();
                                                     
                 //IEnumerable<DO.OrderItem?> tmpProducts = (IEnumerable<DO.OrderItem?>)o.ToList();
-                if (orderItems == null) { throw new(); }
-                return orderItems;
+                if (ProductData == null) { throw new(); }
+                return ProductData;
             }
                else
             {
                 XElement ProductData = XMLTools.LoadListFromXMLElement(orderItemPath);
-                IEnumerable<DO.OrderItem?> orderItems = ProductData.Elements()
-                                              .Where(x => x != null)
-                                              .Select(x => _convertFromXMLToProduct(x)).ToList();
+                IEnumerable<DO.OrderItem?> orderItems =(( ProductData.Elements()
+                                              .Where(x => x != null )
+                                              .Select(x => _convertFromXMLToProduct(x)))
+                                              .Where(x=> predict(x))).ToList();
+                                              
 
                 //IEnumerable<DO.OrderItem?> tmpProducts = (IEnumerable<DO.OrderItem?>)o.ToList();
                 if (orderItems == null) { throw new(); }
                 return orderItems;
+               // return from orderI in ListOrderItems
+            //           where predict(orderI)
+            //           select orderI;
             }
-                
+
             //}
             //catch (DO.XMLFileLoadCreateException ex)
             //{
@@ -92,7 +98,18 @@ namespace Dal
             //           select orderI;
             //}
         }
+        private static int getOrderIemId()
+        {
+            XElement config = XMLTools.LoadListFromXMLElement(@"config.xml");
+            int id = (int)config.Element("idOrderItem");
+            id++;
+            config.Element("idOrderItem")!.SetValue(id);
+            XMLTools.SaveListToXMLElement(config, @"config.xml");
+            return id;
 
+        }
+
+        
         public int Add(DO.OrderItem orderItem)
         {
             //List<OrderItem> ListOrderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
@@ -101,14 +118,23 @@ namespace Dal
 
             XElement orderItemRootElem = XMLTools.LoadListFromXMLElement(orderItemPath);
 
-            XElement orderItemToAdd = (from oi in orderItemRootElem.Elements()
-                                       where int.Parse(oi.Element("ID").Value) == orderItem._id
-                                       select oi).FirstOrDefault();
-            if (orderItemToAdd != null)
-                throw new ItemAlreadyExistsException("order item allready exists") { ItemAlreadyExists = orderItem.ToString() };
+            //XElement orderItemToAdd = (from oi in orderItemRootElem.Elements()
+            //                           where int.Parse(oi.Element("_id").Value) == orderItem._id
+            //                           select oi).FirstOrDefault();
+            //if (orderItemToAdd != null)
+            //    throw new ItemAlreadyExistsException("order item allready exists") { ItemAlreadyExists = orderItem.ToString() };
 
-            orderItemRootElem.Add(orderItemToAdd);
+
+            
+            XElement orderItemElement = new XElement("OrderItem", new XElement("_id", getOrderIemId()),
+                                    new XElement("_orderId", orderItem._orderId),
+                                    new XElement("_productId", orderItem._productId),
+                                    new XElement("_pricePerUnit", orderItem._pricePerUnit),
+                                    new XElement("_quantity", orderItem._quantity));
+            orderItemRootElem.Add(orderItemElement);
+
             XMLTools.SaveListToXMLElement(orderItemRootElem, orderItemPath);
+            
             return orderItem._id;
             //return Config.idOrder;
 

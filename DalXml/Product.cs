@@ -112,14 +112,24 @@ namespace Dal
         }
         private static int getProductId()
         {
-            XElement config = XMLTools.LoadListFromXMLElement(@"Config.xml");
+            XElement config = XMLTools.LoadListFromXMLElement(@"config.xml");
             int id = (int)config.Element("idProduct");
             id++;
             config.Element("idProduct")!.SetValue(id);
-            config.Save(@"Config.xml");
+            XMLTools.SaveListToXMLElement(config, "config.xml");
             return id;
-
         }
+
+        //private static int getOrderId()
+        //{
+        //    XElement config = XMLTools.LoadListFromXMLElement(@"config.xml");
+        //    int id = (int)config.Element("idOrder");
+        //    id++;
+        //    config.Element("idOrder")!.SetValue(id);
+        //    XMLTools.SaveListToXMLElement(config, @"config.xml");
+        //    return id;
+
+        //}
         public int Add(DO.Products product)
         {
             XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);

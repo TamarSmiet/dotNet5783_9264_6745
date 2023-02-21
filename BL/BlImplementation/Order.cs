@@ -79,7 +79,7 @@ internal class Order : IOrder
         {
             getO = Dal.order.Get(order => order!.Value._orderId == id) ;
         }
-         catch(DO.Exceptions.RequestedItemNotFoundException ex)
+        catch(DO.Exceptions.RequestedItemNotFoundException ex)
         {
             throw new BO.NotFound("order not found", ex);
         }
@@ -174,7 +174,7 @@ internal class Order : IOrder
                 }
                 if (i == 1)
                 {
-                    if (updateOForDal._shippingDate < DateTime.Now)
+                    if (updateOForDal._shippingDate < DateTime.Now && updateOForDal._shippingDate!=DateTime.MinValue)
                     {
                         status.Date = updateOForDal._shippingDate;
                         status.Description = "The order was sent";
@@ -184,7 +184,7 @@ internal class Order : IOrder
                 }
                 if (i == 2)
                 {
-                    if (updateOForDal._deliveryDate < DateTime.Now)
+                    if (updateOForDal._deliveryDate < DateTime.Now && updateOForDal._shippingDate != DateTime.MinValue)
                     {
                         status.Date = updateOForDal._deliveryDate;
                         status.Description = "The order was deliveried";
@@ -213,7 +213,7 @@ internal class Order : IOrder
     {
         ////List<BO.OrderItem?> OrderItemsBL = new List<BO.OrderItem?>();
         var OrderItemsBL = OrderItemsDal
-                      .Where(orderItem => orderItem != null )  
+                      .Where(orderItem => orderItem != null)
                       .Select(orderItem => new BO.OrderItem()
                       {
                           Id = orderItem.Value._id,
@@ -222,7 +222,7 @@ internal class Order : IOrder
                           Price = orderItem.Value._pricePerUnit,
                           AmountItems = orderItem.Value._quantity,
                           TotalPriceItem = orderItem.Value._pricePerUnit * orderItem.Value._quantity
-                      });
+                      }) ;
 
         //foreach (DO.OrderItem? orderItem in OrderItemsDal)
         //{

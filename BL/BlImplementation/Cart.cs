@@ -198,6 +198,7 @@ internal class Cart:ICart
         try
         {
             orderId = Dal.order.Add(newOrder);
+            newOrder._orderId=orderId;
         }
         catch
         {

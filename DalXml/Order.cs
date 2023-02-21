@@ -92,11 +92,11 @@ namespace Dal
         }
         private static int getOrderId()
         {
-            XElement config = XMLTools.LoadListFromXMLElement(@"Config.xml");
-            int id = (int)config.Element("idOrder");
+            XElement config = XMLTools.LoadListFromXMLElement(@"config.xml");
+            int id = (int)config.Element("idOrder"); 
             id++;
             config.Element("idOrder")!.SetValue(id);
-            config.Save(@"Config.xml");
+            XMLTools.SaveListToXMLElement(config,@"config.xml");
             return id;
 
         }

@@ -28,10 +28,7 @@ public static class Program
         
     }
     
-    internal static List<Products?> productsList = new List<Products?>();
-    internal static List<Orders?> ordersList = new List<Orders?>();
-    internal static List<OrderItem?> orderItemsList = new List<OrderItem?>();
-    internal readonly static Random num = new Random();
+    
     private static void addOrder(Orders order)
     {
         List<DO.Orders> orderList = XMLTools.LoadListFromXMLSerializer<DO.Orders>("Order.xml");
@@ -45,7 +42,6 @@ public static class Program
     {
         XElement c = new XElement("Config.xml");
         XElement r= XMLTools.LoadListFromXMLElement("config.xml");
-        r.Add(new XElement("ee"));
         XMLTools.SaveListToXMLElement(r, "config.xml");
         XElement config = XMLTools.LoadListFromXMLElement(@"config.xml");
 
@@ -79,6 +75,10 @@ public static class Program
 
     private static void addOrderItem(OrderItem orderItem)
     {
+        //List<DO.OrderItem?> orderItemList = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>("OrderItem.xml");
+        //orderItemList.Add(orderItem);
+        //XMLTools.SaveListToXMLSerializer(orderItemList, @"OrderItem.xml");
+
         XElement productRootElem = XMLTools.LoadListFromXMLElement(@"OrderItem.xml");
         productRootElem.Add(orderItem);
         XMLTools.SaveListToXMLElement(productRootElem, @"OrderItem.xml");

@@ -1,50 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config.xml>
-  <idOrder>1</idOrder>
-  <idProduct> 10010 </idProduct>
-  <idOrderItem>13</idOrderItem>
+  <idOrder>19</idOrder>
+  <idProduct>100013</idProduct>
+  <idOrderItem>19</idOrderItem>
   <idOrderOfIdOrderItem>1</idOrderOfIdOrderItem>
   <idProductOfIdOrderItem>1</idProductOfIdOrderItem>
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
-  <ee />
 </config.xml>
