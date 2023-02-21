@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System;
 using System.Text.RegularExpressions;
 using static DO.Exceptions;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -18,6 +19,7 @@ namespace Dal
         /// </summary>
         /// <param name="product"></param>
         /// <exception cref="Exception"></exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(Products product)
         {
 
@@ -52,6 +54,7 @@ namespace Dal
         /// delete product
         /// </summary>
         /// <param name="pId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int pId)
         {
 
@@ -73,6 +76,7 @@ namespace Dal
         /// updade the details of a product
         /// </summary>
         /// <param name="product">get the new details to update in an object product</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(Products product)
         {
             for (int i = 0; i < productsList.Count; i++)
@@ -91,6 +95,7 @@ namespace Dal
         /// <param name="pId">look for this id product in the products array</param>
         /// <returns>the product that has this id</returns>
         /// <exception cref="Exception">in case he didn't found the product</exception>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Products Get(Func<Products?, bool>? predict = null)
         {
 
@@ -112,6 +117,7 @@ namespace Dal
         /// get all the product of the array
         /// </summary>
         /// <returns>all the product</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Products?> GetAll(Func<Products?, bool>? predict = null)
         {
             List<Products?> productsListCopy = new List<Products?>();
@@ -127,11 +133,7 @@ namespace Dal
                 productsListCopy = (from Products? product in productsList
                                     where predict(product)
                                     select product).ToList();
-                //foreach (Products? product in productsList)
-                //{
-                //    if (predict(product))
-                //        productsListCopy.Add(product);
-                //}
+                
             }
             return productsListCopy;
         }

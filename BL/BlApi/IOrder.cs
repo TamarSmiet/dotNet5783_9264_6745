@@ -16,6 +16,7 @@ public interface IOrder
   
     public OrderTracking trackingOrder(int id);
 
+    public int? selectOrderToTreatment();
     //bonnus
     //public Order UpdateOrder(string id);
 

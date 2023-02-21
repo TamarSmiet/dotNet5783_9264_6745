@@ -26,22 +26,24 @@ internal class Order : IOrder
                        .Where(order => order != null)
                        .Select(order => new BO.OrderForList()
                        {
-                            Id = order.Value._orderId,
-                            Name = order.Value._customerName,
-                            Status = findStatus(order.Value),
-                            AmountProducts = findAmountOfItems(order.Value._orderId),
-                            TotalPrice = findTotalPrice(order.Value._orderId)
+                           Id = order.Value._orderId,
+                           Name = order.Value._customerName,
+                           Status = findStatus(order.Value),
+                           AmountProducts = findAmountOfItems(order.Value._orderId),
+                           TotalPrice = findTotalPrice(order.Value._orderId)
                        }).ToList();
 
-       
+
         return ordersList;
     }
+
+
     private StatusOrder findStatus(DO.Orders order)
     {
         StatusOrder status = StatusOrder.OrderCommited;
         if (order._shippingDate != DateTime.MinValue && order._shippingDate < DateTime.Now)
             status = StatusOrder.OrderShipped;
-        if  (order._deliveryDate!=DateTime.MinValue && order._deliveryDate < DateTime.Now )
+        if (order._deliveryDate != DateTime.MinValue && order._deliveryDate < DateTime.Now)
             status = StatusOrder.OrderDelivered;
         return status;
     }
@@ -51,7 +53,7 @@ internal class Order : IOrder
 
         var count = orderItems
             .Count(orderItem => orderItem != null && orderItem.Value._orderId == orderID);
-        
+
         return count;
     }
 
@@ -61,7 +63,7 @@ internal class Order : IOrder
         double totalPrice = 0;
         foreach (DO.OrderItem? orderItem in orderItems)
         {
-            if(orderItem!=null)
+            if (orderItem != null)
                 if (orderItem.Value._orderId == orderID)
                 {
                     totalPrice += orderItem.Value._pricePerUnit * orderItem.Value._quantity;
@@ -70,16 +72,16 @@ internal class Order : IOrder
         return totalPrice;
     }
 
-   public BO.Order GetOrder(int id)
+    public BO.Order GetOrder(int id)
     {
         if (id < 0)
             throw new BO.InvalidValueException("not valid id");
         DO.Orders getO = new DO.Orders();
         try
         {
-            getO = Dal.order.Get(order => order!.Value._orderId == id) ;
+            getO = Dal.order.Get(order => order!.Value._orderId == id);
         }
-        catch(DO.Exceptions.RequestedItemNotFoundException ex)
+        catch (DO.Exceptions.RequestedItemNotFoundException ex)
         {
             throw new BO.NotFound("order not found", ex);
         }
@@ -88,7 +90,7 @@ internal class Order : IOrder
         {
             OrderItemsDal = Dal.orderItem.GetAll(item => item!.Value._orderId == id);
         }
-        catch(DO.Exceptions.RequestedItemNotFoundException ex)
+        catch (DO.Exceptions.RequestedItemNotFoundException ex)
         {
             throw new BO.NotFound("items not found", ex);
         }
@@ -125,9 +127,9 @@ internal class Order : IOrder
         }
         catch
         {
-            throw new  BO.TheOperationFailed("couldnt update date");
+            throw new BO.TheOperationFailed("couldnt update date");
         }
-       
+
         return updateOForBL;
     }
     public BO.Order UpdateDeliveryOrder(int id)
@@ -151,7 +153,7 @@ internal class Order : IOrder
         {
             throw new BO.TheOperationFailed("couldnt update date");
         }
-       
+
         return updateOForBL;
     }
     public BO.OrderTracking trackingOrder(int id)
@@ -174,7 +176,7 @@ internal class Order : IOrder
                 }
                 if (i == 1)
                 {
-                    if (updateOForDal._shippingDate < DateTime.Now && updateOForDal._shippingDate!=DateTime.MinValue)
+                    if (updateOForDal._shippingDate < DateTime.Now && updateOForDal._shippingDate != DateTime.MinValue)
                     {
                         status.Date = updateOForDal._shippingDate;
                         status.Description = "The order was sent";
@@ -206,12 +208,11 @@ internal class Order : IOrder
             throw new BO.InvalidValueException(ex.Message);
         }
 
-       
+
     }
 
     private List<BO.OrderItem?> getOrderItem(IEnumerable<DO.OrderItem?> OrderItemsDal)
-    {
-        ////List<BO.OrderItem?> OrderItemsBL = new List<BO.OrderItem?>();
+    { 
         var OrderItemsBL = OrderItemsDal
                       .Where(orderItem => orderItem != null)
                       .Select(orderItem => new BO.OrderItem()
@@ -224,21 +225,42 @@ internal class Order : IOrder
                           TotalPriceItem = orderItem.Value._pricePerUnit * orderItem.Value._quantity
                       }) ;
 
-        //foreach (DO.OrderItem? orderItem in OrderItemsDal)
-        //{
-        //    BO.OrderItem orderItemBL = new BO.OrderItem();
-        //    if (orderItem != null)
-        //    {
-        //         orderItemBL.Id = orderItem.Value._id;
-        //         orderItemBL.Name = Dal.product.Get(order => order!.Value._productId == orderItem.Value._productId)._productName;
-        //         orderItemBL.IdOrderItem = orderItem.Value._productId;
-        //         orderItemBL.Price = orderItem.Value._pricePerUnit;
-        //         orderItemBL.AmountItems = orderItem.Value._quantity;
-        //         orderItemBL.TotalPriceItem = orderItem.Value._pricePerUnit * orderItem.Value._quantity;
-         
-        //         OrderItemsBL.Add(orderItemBL);
-        //    }
-        //}
         return OrderItemsBL.ToList();
+    }
+
+    private OrderForList getMin(List<BO.OrderForList> list , StatusOrder status )
+    {
+        OrderForList MinOrder = list[0];
+        foreach (OrderForList order in list)
+        {
+           if(status== StatusOrder.OrderCommited)
+            {
+                if (GetOrder(order.Id).PlaceOrderDate < GetOrder(MinOrder.Id).PlaceOrderDate)
+                    MinOrder = order;
+            }
+           else
+            {
+                if (GetOrder(order.Id).ExpeditionDate < GetOrder(MinOrder.Id).ExpeditionDate)
+                    MinOrder = order;
+            }
+            
+        }
+        return MinOrder;
+    }
+    public int? selectOrderToTreatment()
+    {   List<BO.OrderForList>? listOrderIsCreated = GetOrders().Where(order=>order.Status==StatusOrder.OrderCommited).Select(order=>order).ToList();
+        List<BO.OrderForList>? listOrderIsShipped = GetOrders().Where(order => order.Status == StatusOrder.OrderShipped).Select(order => order).ToList();
+        if(listOrderIsCreated==null&& listOrderIsShipped==null)
+        {
+            return null;
+        }
+        OrderForList MinOrderIsCreated = getMin(listOrderIsCreated!, StatusOrder.OrderCommited);
+        OrderForList MinOrderIsShipped = getMin(listOrderIsShipped, StatusOrder.OrderShipped);
+        if (GetOrder(MinOrderIsCreated.Id).PlaceOrderDate < GetOrder(MinOrderIsShipped.Id).ExpeditionDate)
+            return MinOrderIsCreated.Id;
+        else
+            return MinOrderIsShipped.Id;
+
+
     }
 }

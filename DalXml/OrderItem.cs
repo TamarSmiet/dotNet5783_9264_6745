@@ -9,13 +9,14 @@ using System.Xml.Linq;
 using static DO.Exceptions;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
     internal class OrderItem : IOrderItem
     {
         string orderItemPath = @"OrderItem.xml"; //XElement
-       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem Get(Func<DO.OrderItem?, bool>? predict = null)
         {
             List<DO.OrderItem?> ListOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemPath);
@@ -46,19 +47,12 @@ namespace Dal
             };
             return (DO.OrderItem?)orderItem;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? predict = null)
         {
-
-            //try
-            //{
             if (predict == null)
             {
                 List<DO.OrderItem?> ProductData = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemPath);
-                //IEnumerable<DO.OrderItem?> orderItems = ProductData
-                //                              .Where(x => x != null)
-                //                              .Select(x => _convertFromXMLToProduct(x)).ToList();
-                                                    
-                //IEnumerable<DO.OrderItem?> tmpProducts = (IEnumerable<DO.OrderItem?>)o.ToList();
                 if (ProductData == null) { throw new(); }
                 return ProductData;
             }
@@ -71,32 +65,13 @@ namespace Dal
                                               .Where(x=> predict(x))).ToList();
                                               
 
-                //IEnumerable<DO.OrderItem?> tmpProducts = (IEnumerable<DO.OrderItem?>)o.ToList();
+                
                 if (orderItems == null) { throw new(); }
                 return orderItems;
-               // return from orderI in ListOrderItems
-            //           where predict(orderI)
-            //           select orderI;
+               
             }
 
-            //}
-            //catch (DO.XMLFileLoadCreateException ex)
-            //{
-            //    throw ex;
-            //}
-
-            //List<DO.OrderItem?> ListOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>(orderItemPath);
-            //if (predict == null)
-            //{
-            //    return from orderI in ListOrderItems
-            //           select orderI;
-            //}
-            //else
-            //{
-            //    return from orderI in ListOrderItems
-            //           where predict(orderI)
-            //           select orderI;
-            //}
+            
         }
         private static int getOrderIemId()
         {
@@ -109,23 +84,11 @@ namespace Dal
 
         }
 
-        
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.OrderItem orderItem)
         {
-            //List<OrderItem> ListOrderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
-            //if(ListOrderItems.FirstOrDefault(o => orderItem._id == o.)!=null)
-            //    throw new Exceptions.ItemAlreadyExistsException("order allready exists") { ItemAlreadyExists = orderItem.ToString() };
-
-            XElement orderItemRootElem = XMLTools.LoadListFromXMLElement(orderItemPath);
-
-            //XElement orderItemToAdd = (from oi in orderItemRootElem.Elements()
-            //                           where int.Parse(oi.Element("_id").Value) == orderItem._id
-            //                           select oi).FirstOrDefault();
-            //if (orderItemToAdd != null)
-            //    throw new ItemAlreadyExistsException("order item allready exists") { ItemAlreadyExists = orderItem.ToString() };
-
-
             
+            XElement orderItemRootElem = XMLTools.LoadListFromXMLElement(orderItemPath);
             XElement orderItemElement = new XElement("OrderItem", new XElement("_id", getOrderIemId()),
                                     new XElement("_orderId", orderItem._orderId),
                                     new XElement("_productId", orderItem._productId),
@@ -136,10 +99,9 @@ namespace Dal
             XMLTools.SaveListToXMLElement(orderItemRootElem, orderItemPath);
             
             return orderItem._id;
-            //return Config.idOrder;
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.OrderItem orderItem)
         {
             XElement orderItemRootElem = XMLTools.LoadListFromXMLElement(orderItemPath);
@@ -161,7 +123,7 @@ namespace Dal
             else
                 throw new RequestedItemNotFoundException($"bad order item id: {orderItem._id}");
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
 

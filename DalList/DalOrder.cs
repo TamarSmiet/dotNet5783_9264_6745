@@ -5,6 +5,7 @@ using System.Net;
 using System.Xml.Linq;
 using static Dal.DataSource;
 using static DO.Exceptions;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -16,6 +17,8 @@ namespace Dal
         /// </summary>
         /// <param name="order"></param>
         /// <exception cref="Exception">in case of the id allready is in the array</exception>
+        /// [MethodImpl(MethodImplOptions.Synchronized)]
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(Orders order)
         {
 
@@ -38,6 +41,7 @@ namespace Dal
         /// delete an order
         /// </summary>
         /// <param name="oId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int oId)
         {
             for (int i = 0; i < ordersList.Count; i++)
@@ -55,6 +59,7 @@ namespace Dal
         /// update the details of an order
         /// </summary>
         /// <param name="order">get the new details for the order to update in an object</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(Orders order)
         {
             for (int i = 0; i < ordersList.Count; i++)
@@ -67,7 +72,7 @@ namespace Dal
         }
 
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Orders Get(Func<Orders?, bool>? predict = null)
         {
 
@@ -96,7 +101,7 @@ namespace Dal
         }
 
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Orders?> GetAll(Func<Orders?, bool>? predict = null)
         {
             List<Orders?> ordersListCopy = new List<Orders?>();

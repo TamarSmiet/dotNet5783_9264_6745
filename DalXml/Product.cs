@@ -13,32 +13,24 @@ using static DO.Exceptions;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using static DO.Enums;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
     internal class Products : IProducts
     {
         string productPath = @"Products.xml"; //XElement
-
-
-        //public DO.Products? Get(Func<DO.Products?, bool>? predict = null)
         DO.Products ICrud<DO.Products>.Get(Func<DO.Products?, bool>? predict)
         {
             List<DO.Products?> ListProduct = XMLTools.LoadListFromXMLSerializer<DO.Products?>(productPath);
-            //List<Products?> productListCopy = new List<Products?>();
-            //  XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
             DO.Products? product = ListProduct.Find(p => predict != null && predict(p));
             if (product != null)
                 return (DO.Products)product;
             else
                 throw new RequestedItemNotFoundException("product with this id does not exist!");
 
-            //return ( from product in productRootElem
-            //        where predict != null && predict(product)
-            //        select product!).FirstOrDefault();
-
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.Products?> GetAll(Func<DO.Products?, bool>? predict = null)
         {
             List<DO.Products?> productRootElem = XMLTools.LoadListFromXMLSerializer<DO.Products?>(productPath);
@@ -59,10 +51,10 @@ namespace Dal
             }
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(DO.Products product)
         {
-            //List<Products?> productRootElem = XMLTools.LoadListFromXMLSerializer<Products?>(productPath);
+            
             XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
             XElement productToUpdate = (from p in productRootElem.Elements()
                                         where int.Parse(p.Element("_productId").Value) == product._productId
@@ -82,7 +74,7 @@ namespace Dal
                 throw new RequestedItemNotFoundException($"bad product id: {product._productId}");
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int pId)
         {
             XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
@@ -97,18 +89,6 @@ namespace Dal
             }
             else
                 throw new RequestedItemNotFoundException("product with this id does not exist!") { RequestedItemNotFound = pId.ToString() };
-
-            //for (int i = 0; i < productsList.Count; i++)
-            //{
-            //    if (pId == productsList[i]?._productId)
-            //    {
-            //        productsList.Remove(productsList[i]);
-            //        return;
-            //    }
-
-            //}
-            //throw new Exceptions.RequestedItemNotFoundException("product with there ids does not exist!") { RequestedItemNotFound = pId.ToString() };
-
         }
         private static int getProductId()
         {
@@ -120,16 +100,7 @@ namespace Dal
             return id;
         }
 
-        //private static int getOrderId()
-        //{
-        //    XElement config = XMLTools.LoadListFromXMLElement(@"config.xml");
-        //    int id = (int)config.Element("idOrder");
-        //    id++;
-        //    config.Element("idOrder")!.SetValue(id);
-        //    XMLTools.SaveListToXMLElement(config, @"config.xml");
-        //    return id;
-
-        //}
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Products product)
         {
             XElement productRootElem = XMLTools.LoadListFromXMLElement(productPath);
@@ -172,24 +143,5 @@ namespace Dal
             return product._productId;
         }
 
-        //DO.Products ICrud<DO.Products>.Get(Func<DO.Products?, bool>? predict)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public IEnumerable<DO.Products?> GetAll(Func<DO.Products?, bool>? predict = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Products Get(Func<DO.Products?, bool>? predict = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public IEnumerable<Products?> GetAll(Func<DO.Products?, bool>? predict = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

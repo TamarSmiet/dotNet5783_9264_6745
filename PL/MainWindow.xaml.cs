@@ -34,6 +34,8 @@ namespace PL
         private void ShowNewOrderWindow_Click(object sender, RoutedEventArgs e) => new CatalogWindow().Show();
 
         private void ShowTrackOrderWindow_Click(object sender, RoutedEventArgs e) => new OrderTrackingWindow().Show();
-        
+
+        private void ShowSimulatorWindow_Click(object sender, RoutedEventArgs e) => new SimulatorWindow().Show();
+       
     }
 }
