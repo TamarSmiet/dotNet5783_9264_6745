@@ -191,8 +191,6 @@ internal class Cart:ICart
             _orderDate = DateTime.Now,
             _shippingDate =DateTime.MinValue,
             _deliveryDate=DateTime.MinValue,
-            
-           
         };
         int orderId;
         try

@@ -12,21 +12,21 @@
     <_productName>Oven</_productName>
     <_price>2000</_price>
     <_category>kitchen</_category>
-    <_amountInStock>70</_amountInStock>
+    <_amountInStock>69</_amountInStock>
   </Products>
   <Products>
     <_productId>100001</_productId>
     <_productName>Stove</_productName>
     <_price>500</_price>
     <_category>kitchen</_category>
-    <_amountInStock>99</_amountInStock>
+    <_amountInStock>98</_amountInStock>
   </Products>
   <Products>
     <_productId>100002</_productId>
     <_productName>Refrigirator</_productName>
     <_price>3000</_price>
     <_category>kitchen</_category>
-    <_amountInStock>46</_amountInStock>
+    <_amountInStock>44</_amountInStock>
   </Products>
   <Products>
     <_productId>100003</_productId>
@@ -54,7 +54,7 @@
     <_productName>Hair Brush</_productName>
     <_price>350</_price>
     <_category>hair</_category>
-    <_amountInStock>98</_amountInStock>
+    <_amountInStock>97</_amountInStock>
   </Products>
   <Products>
     <_productId>100007</_productId>
@@ -68,18 +68,18 @@
     <_productName>Babyliss</_productName>
     <_price>200</_price>
     <_category>hair</_category>
-    <_amountInStock>47</_amountInStock>
+    <_amountInStock>44</_amountInStock>
   </Products>
   <Products>
     <_productId>100009</_productId>
     <_productName>Phone Apple</_productName>
     <_price>3500</_price>
     <_category>cellular</_category>
-    <_amountInStock>149</_amountInStock>
+    <_amountInStock>148</_amountInStock>
   </Products>
   <Products>
     <_productId>100011</_productId>
-    <_productName>fgvhbj</_productName>
+    <_productName>washing machine</_productName>
     <_price>15</_price>
     <_category>kitchen</_category>
     <_amountInStock>0</_amountInStock>
@@ -96,7 +96,7 @@
     <_productName>blender</_productName>
     <_price>100</_price>
     <_category>kitchen</_category>
-    <_amountInStock>37</_amountInStock>
+    <_amountInStock>35</_amountInStock>
   </Products>
   <Products>
     <_productId>100013</_productId>

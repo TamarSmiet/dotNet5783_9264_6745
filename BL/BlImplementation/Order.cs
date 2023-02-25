@@ -50,10 +50,13 @@ internal class Order : IOrder
     private int findAmountOfItems(int orderID)
     {
         IEnumerable<DO.OrderItem?> orderItems = Dal.orderItem.GetAll();
+        int count = 0;
+        var myOrderItems = orderItems
+            .Where(orderItem => orderItem != null && orderItem.Value._orderId == orderID)
+            .Select(orderItem => orderItem);
 
-        var count = orderItems
-            .Count(orderItem => orderItem != null && orderItem.Value._orderId == orderID);
-
+        foreach (var item in myOrderItems)
+            count += item!.Value._quantity;
         return count;
     }
 
@@ -228,39 +231,70 @@ internal class Order : IOrder
         return OrderItemsBL.ToList();
     }
 
-    private OrderForList getMin(List<BO.OrderForList> list , StatusOrder status )
-    {
-        OrderForList MinOrder = list[0];
-        foreach (OrderForList order in list)
-        {
-           if(status== StatusOrder.OrderCommited)
-            {
-                if (GetOrder(order.Id).PlaceOrderDate < GetOrder(MinOrder.Id).PlaceOrderDate)
-                    MinOrder = order;
-            }
-           else
-            {
-                if (GetOrder(order.Id).ExpeditionDate < GetOrder(MinOrder.Id).ExpeditionDate)
-                    MinOrder = order;
-            }
-            
-        }
-        return MinOrder;
-    }
+    //private OrderForList getMin(List<BO.OrderForList> list , StatusOrder status )
+    //{
+    //    OrderForList MinOrder = list[0];
+    //    foreach (OrderForList order in list)
+    //    {
+    //       if(status== StatusOrder.OrderCommited)
+    //        {
+    //            if (GetOrder(order.Id).PlaceOrderDate < GetOrder(MinOrder.Id).PlaceOrderDate)
+    //                MinOrder = order;
+    //        }
+    //       else
+    //        {
+    //            if (GetOrder(order.Id).ExpeditionDate < GetOrder(MinOrder.Id).ExpeditionDate)
+    //                MinOrder = order;
+    //        }
+
+    //    }
+    //    return MinOrder;
+    //}
+    //public int? selectOrderToTreatment()
+    //{   List<BO.OrderForList>? listOrderIsCreated = GetOrders().Where(order=>order.Status==StatusOrder.OrderCommited).Select(order=>order).ToList();
+    //    List<BO.OrderForList>? listOrderIsShipped = GetOrders().Where(order => order.Status == StatusOrder.OrderShipped).Select(order => order).ToList();
+    //    if(listOrderIsCreated==null&& listOrderIsShipped==null)
+    //    {
+    //        return null;
+    //    }
+    //    OrderForList MinOrderIsCreated = getMin(listOrderIsCreated!, StatusOrder.OrderCommited);
+    //    OrderForList MinOrderIsShipped = getMin(listOrderIsShipped, StatusOrder.OrderShipped);
+    //    if (GetOrder(MinOrderIsCreated.Id).PlaceOrderDate < GetOrder(MinOrderIsShipped.Id).ExpeditionDate)
+    //        return MinOrderIsCreated.Id;
+    //    else
+    //        return MinOrderIsShipped.Id;
+
+
+    //}
+
     public int? selectOrderToTreatment()
-    {   List<BO.OrderForList>? listOrderIsCreated = GetOrders().Where(order=>order.Status==StatusOrder.OrderCommited).Select(order=>order).ToList();
-        List<BO.OrderForList>? listOrderIsShipped = GetOrders().Where(order => order.Status == StatusOrder.OrderShipped).Select(order => order).ToList();
-        if(listOrderIsCreated==null&& listOrderIsShipped==null)
+    {
+        DateTime minDate = DateTime.Now;
+        int? orderId = null;
+        List<OrderForList>? orderList = GetOrders().ToList();
+        orderList?.ForEach(o =>
+
         {
-            return null;
-        }
-        OrderForList MinOrderIsCreated = getMin(listOrderIsCreated!, StatusOrder.OrderCommited);
-        OrderForList MinOrderIsShipped = getMin(listOrderIsShipped, StatusOrder.OrderShipped);
-        if (GetOrder(MinOrderIsCreated.Id).PlaceOrderDate < GetOrder(MinOrderIsShipped.Id).ExpeditionDate)
-            return MinOrderIsCreated.Id;
-        else
-            return MinOrderIsShipped.Id;
-
-
+            switch (o.Status)
+            {
+                case StatusOrder.OrderCommited:
+                    if (GetOrder(o.Id).PlaceOrderDate < minDate)
+                    {
+                        orderId = o.Id;
+                        minDate = (DateTime)GetOrder(o.Id).PlaceOrderDate;
+                    }
+                    break;
+                case StatusOrder.OrderShipped:
+                    if (GetOrder(o.Id).ExpeditionDate < minDate)
+                    {
+                        orderId = o.Id;
+                        minDate = (DateTime)GetOrder(o.Id).ExpeditionDate;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+        return orderId;
     }
 }

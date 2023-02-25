@@ -97,7 +97,7 @@ public partial class SimulatorWindow : Window
     private void WaitForOrders()//shot down - event rise from simulator, becouse there is no more order to handel
     {
         isWating = true;
-        backroundWorker.ReportProgress(2);
+        backroundWorker.ReportProgress(-2);
     }
 
 
@@ -113,7 +113,7 @@ public partial class SimulatorWindow : Window
         Simulator.Simulator.Activate();
         while (!backroundWorker.CancellationPending)//handle clock
         {
-            backroundWorker.ReportProgress(1);
+            backroundWorker.ReportProgress(-1);
             Thread.Sleep(50);
         }
     }
@@ -123,7 +123,7 @@ public partial class SimulatorWindow : Window
     private void UpdateScreen(Object? sender, ProgressChangedEventArgs? e)
     {
         //update the screen - call from ReportProgress - if want to update order details send order id, for clock update send 1
-        if (e?.ProgressPercentage > 1000)//want to update order details
+        if (e?.ProgressPercentage > 0)//want to update order details
         {
             var args = (Tuple<BO.Order, int>)e.UserState!;//extract the Tuple that contain Random time to end and the order details
 
@@ -147,7 +147,7 @@ public partial class SimulatorWindow : Window
 
             updateOrderList?.Invoke();//UPDATE THE LIST IN ORDER WINDOW - RISE THE EVENT
         }
-        else if (e?.ProgressPercentage == 1)//clock update and precentege progres bar
+        else if (e?.ProgressPercentage == -1)//clock update and precentege progres bar
         {
             string timerText = stopWatch.Elapsed.ToString();
             ClockText = timerText[..8];
@@ -155,7 +155,10 @@ public partial class SimulatorWindow : Window
             if (!isWating)//we dont wait for order to come and the simulator working!
             {
                 if (totalWorkTime != 0)
-                    PercentageUpdate = ((stopWatch.Elapsed.TotalSeconds - startTime) / totalWorkTime) * 100;//duration time span since started / random expected working time
+                {
+                    PercentageUpdate = ((stopWatch.Elapsed.TotalSeconds - startTime) / totalWorkTime) * 100;//duration time span since started / random expected working tim
+                }
+
                 else
                     PercentageUpdate = 0;//cant div by 0
             }
@@ -164,7 +167,7 @@ public partial class SimulatorWindow : Window
                 PercentageUpdate = 0;
             }
         }
-        else if (e?.ProgressPercentage == 2)//wait for order to show up
+        else if (e?.ProgressPercentage == -2)//wait for order to show up
         {
             CurrentOrderHandle = "No more orders to work on...";
             ExpectedOrderDetails = "Wating for the next order";

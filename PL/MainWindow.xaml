@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Manager" Margin="-550,0,0,0" Height="100" Width='150' FontSize="30"  Background="LightBlue" Click="ShowManagerWindow_Click"></Button>
-        <Button Content="New order" Margin="-180,0,0,0" Height="100" Width='150' FontSize="30" Background="LightBlue" Click="ShowNewOrderWindow_Click"></Button>
-        <Button Content="Track order" Margin="180,0,0,0" Height="100" Width='150' FontSize="30" Background="LightBlue" Click="ShowTrackOrderWindow_Click"></Button>
-        <Button Content="Start simulator" Margin="587,167,10,167" Height="100" FontSize="30" Background="LightBlue" Click="ShowSimulatorWindow_Click"/>
+        <Button Content="Manager" Margin="275,26,300,343" FontSize="30"  Background="LightBlue" Click="ShowManagerWindow_Click"/>
+        <Button Content="New order" Margin="275,112,300,255" FontSize="30" Background="LightBlue" Click="ShowNewOrderWindow_Click"/>
+        <Button Content="Track order" Margin="275,209,300,161" FontSize="30" Background="LightBlue" Click="ShowTrackOrderWindow_Click"/>
+        <Button Content="Start simulator" Margin="275,302,300,65" FontSize="30" Background="LightBlue" Click="ShowSimulatorWindow_Click"/>
     </Grid>
 </Window>

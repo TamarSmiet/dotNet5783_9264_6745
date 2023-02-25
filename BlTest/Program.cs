@@ -11,17 +11,13 @@ namespace BlTest
 {
     public class Program
     {
-        //private static readonly IBl blVariable = new Bl();
         private static readonly BlApi.IBl? blVariable = BlApi.Factory.Get();
-        //private static IBl blVariableFromMethod = new Bl();
-        private static BlApi.IBl? blVariableFromMethod = BlApi.Factory.Get();
         static Cart cart = new Cart() { Orders = new List<BO.OrderItem>() { } };//Creating an instance of a cart
         static Cart tmpCart = new Cart();
         static private Product product = new Product();
         static private Order order = new Order();
         static private Order orderFromMethod = new Order();
         static private OrderTracking orderTrackingFromMethod = new OrderTracking();
-        //static private Cart cart = new Cart();
         public static void Main()
         {
             int choice;
@@ -249,41 +245,6 @@ namespace BlTest
                     }
                 case 3://place order
                     {
-                        //List<BO.OrderItem> list = new();
-                        //Console.WriteLine("enter customer name");
-                        //cart.CustomerName = Console.ReadLine();
-                        //Console.WriteLine("enter customer address");
-                        //cart.Address = Console.ReadLine();
-                        //Console.WriteLine("enter customer email");
-                        //cart.Email = Console.ReadLine();
-                        //Console.WriteLine("enter product id and amount of items in cart,for finish enter 0");
-                        ////int.TryParse(Console.ReadLine(), out parse);
-                        //int productId = int.Parse(Console.ReadLine());
-                        ////int.TryParse(Console.ReadLine(), out parse);
-                        //int amount = int.Parse(Console.ReadLine());
-                        //while (productId != 0)
-                        //{
-                        //    BO.OrderItem orderItem = new BO.OrderItem()
-                        //    {
-                        //        //ID=
-                        //        Name = blVariable.Product.GetProduct(productId).Name,
-                        //        IdOrderItem=1,
-                        //        Id = productId,
-                        //        Price = blVariable.Product.GetProduct(productId).Price,//manager
-                        //        AmountItems = amount,
-                        //        TotalPriceItem=amount* blVariable.Product.GetProduct(productId).Price
-                        //    };
-                        //    list.Add(orderItem);
-                        //    //cart.Orders.Add(orderItem);
-                        //    Console.WriteLine("enter product id and amount of items in cart,for finish enter 0");
-                        //    int.TryParse(Console.ReadLine(), out parse);
-                        //    productId = parse;
-                        //    int.TryParse(Console.ReadLine(), out parse);
-                        //    amount = parse;
-                        //}
-                        //cart.Orders=list;
-                        //blVariable.Cart.PlaceOrder(cart);
-
                         Console.WriteLine("enter customer name");
                         cart.CustomerName = Console.ReadLine();
                         Console.WriteLine("enter customer address");

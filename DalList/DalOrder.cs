@@ -17,7 +17,7 @@ namespace Dal
         /// </summary>
         /// <param name="order"></param>
         /// <exception cref="Exception">in case of the id allready is in the array</exception>
-        /// [MethodImpl(MethodImplOptions.Synchronized)]
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(Orders order)
         {
