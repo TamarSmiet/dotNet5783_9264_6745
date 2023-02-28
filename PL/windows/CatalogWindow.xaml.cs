@@ -46,12 +46,7 @@ namespace PL.windows
             InitializeComponent();
             productItemList =new ObservableCollection<ProductItem?>(bl.Product.GetAllProductItems().Cast<ProductItem>());
         }
-        //private void updateProduct(ProductForList product)
-        //{
-        //    var item = productForLists.FirstOrDefault(item => item.Id == product.Id);
-        //    int index = productForLists.IndexOf(item);
-        //    productForLists[index] = product;
-        //}
+       
         private void updateAmountInCart(ProductItem productItem)
         {
             var item=productItemList.FirstOrDefault(item=>item.Id==productItem.Id);

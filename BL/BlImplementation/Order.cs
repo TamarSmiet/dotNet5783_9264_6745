@@ -231,41 +231,7 @@ internal class Order : IOrder
         return OrderItemsBL.ToList();
     }
 
-    //private OrderForList getMin(List<BO.OrderForList> list , StatusOrder status )
-    //{
-    //    OrderForList MinOrder = list[0];
-    //    foreach (OrderForList order in list)
-    //    {
-    //       if(status== StatusOrder.OrderCommited)
-    //        {
-    //            if (GetOrder(order.Id).PlaceOrderDate < GetOrder(MinOrder.Id).PlaceOrderDate)
-    //                MinOrder = order;
-    //        }
-    //       else
-    //        {
-    //            if (GetOrder(order.Id).ExpeditionDate < GetOrder(MinOrder.Id).ExpeditionDate)
-    //                MinOrder = order;
-    //        }
 
-    //    }
-    //    return MinOrder;
-    //}
-    //public int? selectOrderToTreatment()
-    //{   List<BO.OrderForList>? listOrderIsCreated = GetOrders().Where(order=>order.Status==StatusOrder.OrderCommited).Select(order=>order).ToList();
-    //    List<BO.OrderForList>? listOrderIsShipped = GetOrders().Where(order => order.Status == StatusOrder.OrderShipped).Select(order => order).ToList();
-    //    if(listOrderIsCreated==null&& listOrderIsShipped==null)
-    //    {
-    //        return null;
-    //    }
-    //    OrderForList MinOrderIsCreated = getMin(listOrderIsCreated!, StatusOrder.OrderCommited);
-    //    OrderForList MinOrderIsShipped = getMin(listOrderIsShipped, StatusOrder.OrderShipped);
-    //    if (GetOrder(MinOrderIsCreated.Id).PlaceOrderDate < GetOrder(MinOrderIsShipped.Id).ExpeditionDate)
-    //        return MinOrderIsCreated.Id;
-    //    else
-    //        return MinOrderIsShipped.Id;
-
-
-    //}
 
     public int? selectOrderToTreatment()
     {

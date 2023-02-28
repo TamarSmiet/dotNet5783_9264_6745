@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config.xml>
-  <idOrder>12</idOrder>
-  <idProduct>100013</idProduct>
-  <idOrderItem>28</idOrderItem>
+  <idOrder>21</idOrder>
+  <idProduct>100014</idProduct>
+  <idOrderItem>39</idOrderItem>
   <idOrderOfIdOrderItem>1</idOrderOfIdOrderItem>
   <idProductOfIdOrderItem>1</idProductOfIdOrderItem>
 </config.xml>

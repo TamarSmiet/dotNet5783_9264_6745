@@ -58,8 +58,6 @@ namespace PL.windows
         }
 
 
-
-        // private void addProduct(ProductForList product) => productForLists.ToList().Add(product);
         private void addProduct(ProductForList product) => productForLists.Insert(productForLists.Count, product);
         private void updateProduct(ProductForList product)
         {

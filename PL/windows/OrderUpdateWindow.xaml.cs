@@ -65,8 +65,6 @@ namespace PL.windows
         public static readonly DependencyProperty  orderTrackingProperty =
             DependencyProperty.Register("OrderTracking orderTracking", typeof(OrderTracking), typeof(OrderUpdateWindow));
 
-
-        //public static OrderTracking orderTracking { get; set; }=new OrderTracking();
         public OrderUpdateWindow(int id)
         {
             order = bl.Order.GetOrder(id); 

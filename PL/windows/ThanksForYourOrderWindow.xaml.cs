@@ -19,11 +19,11 @@ namespace PL.windows
     /// </summary>
     public partial class ThanksForYourOrderWindow : Window
     {
-        //public  string CustomerName { get; set; }
+       
         public string Thanks { get; set; }
         public ThanksForYourOrderWindow(string name)
         {
-            //CustomerName= name;
+          
             Thanks = $@"{name}, thanks for your order!";
             InitializeComponent();
            

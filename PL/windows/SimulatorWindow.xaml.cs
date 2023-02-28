@@ -7,17 +7,20 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Animation;
 
 namespace PL.windows;
 
 /// <summary>
-/// simulator stimulat the store dayli working 
+/// simulator stimulat the store dayli working 9
 /// take the oldest order and Send/Provide it to customer
 /// do it until orders end or by clicking the stop button 
 /// </summary>
 public partial class SimulatorWindow : Window
 {
+    private bool closeWindow = false;
     private readonly Stopwatch stopWatch = new();
 
     private volatile bool isTimerRun;
@@ -119,7 +122,14 @@ public partial class SimulatorWindow : Window
     }
 
 
-
+     private void Window_Closing(object sender, CancelEventArgs e)
+    {
+        if (backroundWorker.CancellationPending == false && isTimerRun) // Won't allow to cancel the window!!! It is not me!!!
+        {
+            e.Cancel = true;
+            MessageBox.Show(@"DON""T CLOSE ME!!!", "STOP IT!!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+    }
     private void UpdateScreen(Object? sender, ProgressChangedEventArgs? e)
     {
         //update the screen - call from ReportProgress - if want to update order details send order id, for clock update send 1
@@ -141,7 +151,8 @@ public partial class SimulatorWindow : Window
             totalWorkTime = (args.Item2 / 1000);
 
             //update expected time & status of order after work will done
-            ExpectedOrderDetails = "Started at : " + timerText.ToString() +
+            ExpectedOrderDetails = "Started at : " + //timerText.ToString()
+                                                   DateTime.Now +
                 "\nExpected processing end time : " + endTime +
                 "\nWill be " + (args.Item1.OrderStatus == BO.Enums.StatusOrder.OrderShipped ? "Provide." : "Sent.");
 
@@ -178,16 +189,10 @@ public partial class SimulatorWindow : Window
     private void StopTimerButton_Click(object sender, RoutedEventArgs e)
     {
         backroundWorker.CancelAsync();
+        closeWindow = true;
     }
 
-    private void Window_Closing(object sender, CancelEventArgs e)
-    {
-        if (backroundWorker.CancellationPending == false && isTimerRun) // Won't allow to cancel the window!!! It is not me!!!
-        {
-            e.Cancel = true;
-            MessageBox.Show(@"DON""T CLOSE ME!!!", "STOP IT!!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        }
-    }
+    
     private void CloseHandler(object? sender, RunWorkerCompletedEventArgs? e)//close the window with soft thread cancel
     {
         Simulator.Simulator.DeAcitavet();
@@ -199,5 +204,9 @@ public partial class SimulatorWindow : Window
         Simulator.Simulator.Wating -= WaitForOrders;
     }
 
-    
+    private void OnClosing(object sender, CancelEventArgs e)
+    {
+        if (!closeWindow)
+            e.Cancel = true;
+    }
 }

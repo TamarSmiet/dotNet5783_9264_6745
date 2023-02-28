@@ -67,35 +67,12 @@ namespace PL.windows
                 Name = itemToUpdate.Name,
                 price = itemToUpdate.Price,
                 AmountItemInCart = itemToUpdate.AmountItems,
-
-                //             public int Id { get; set; }
-                //public string? Name { get; set; }
-                //public double price { get; set; }
-                //public eCategory? category { get; set; }
-                //public bool IsInStock { get; set; }
-                //public int AmountItemInCart { get; set; }
-
             };
            
 
         }
 
-        //private void updateAmountInCart(OrderItem orderItem)
-        //{
-        //    List<ProductItem> productItemList = new List<ProductItem?>(bl.Product.GetAllProductItems());
-        //    var item = productItemList.FirstOrDefault(item => item.Id == productItem.Id);
-        //    int index = productItemList.IndexOf(item);
-        //    ProductItem updateProduct = new ProductItem()
-        //    {
-        //        Id = productItem.Id,
-        //        Name = productItem.Name,
-        //        category = productItem.category,
-        //        price = productItem.price,
-        //        AmountItemInCart = productItem.AmountItemInCart,
-        //        IsInStock = productItem.IsInStock
-        //    };
-        //    productItemList[index] = updateProduct;
-        //}
+       
         private void UpdateItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new ItemInCartToUpdateWindow(MyCart,selectedItemToUpdate,updateItemInCart, action).Show();

@@ -12,7 +12,7 @@
     <_productName>Oven</_productName>
     <_price>2000</_price>
     <_category>kitchen</_category>
-    <_amountInStock>69</_amountInStock>
+    <_amountInStock>67</_amountInStock>
   </Products>
   <Products>
     <_productId>100001</_productId>
@@ -26,7 +26,7 @@
     <_productName>Refrigirator</_productName>
     <_price>3000</_price>
     <_category>kitchen</_category>
-    <_amountInStock>44</_amountInStock>
+    <_amountInStock>43</_amountInStock>
   </Products>
   <Products>
     <_productId>100003</_productId>
@@ -47,14 +47,14 @@
     <_productName>Phone Samsung</_productName>
     <_price>2500</_price>
     <_category>cellular</_category>
-    <_amountInStock>69</_amountInStock>
+    <_amountInStock>68</_amountInStock>
   </Products>
   <Products>
     <_productId>100006</_productId>
     <_productName>Hair Brush</_productName>
     <_price>350</_price>
     <_category>hair</_category>
-    <_amountInStock>97</_amountInStock>
+    <_amountInStock>95</_amountInStock>
   </Products>
   <Products>
     <_productId>100007</_productId>
@@ -68,7 +68,7 @@
     <_productName>Babyliss</_productName>
     <_price>200</_price>
     <_category>hair</_category>
-    <_amountInStock>44</_amountInStock>
+    <_amountInStock>42</_amountInStock>
   </Products>
   <Products>
     <_productId>100009</_productId>
@@ -96,7 +96,7 @@
     <_productName>blender</_productName>
     <_price>100</_price>
     <_category>kitchen</_category>
-    <_amountInStock>35</_amountInStock>
+    <_amountInStock>30</_amountInStock>
   </Products>
   <Products>
     <_productId>100013</_productId>
@@ -104,5 +104,12 @@
     <_price>120</_price>
     <_category>kitchen</_category>
     <_amountInStock>30</_amountInStock>
+  </Products>
+  <Products>
+    <_productId>100014</_productId>
+    <_productName>lemp</_productName>
+    <_price>40</_price>
+    <_category>house</_category>
+    <_amountInStock>3</_amountInStock>
   </Products>
 </ArrayOfProducts>

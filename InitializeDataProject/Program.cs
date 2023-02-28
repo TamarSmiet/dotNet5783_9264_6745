@@ -34,9 +34,6 @@ public static class Program
         List<DO.Orders> orderList = XMLTools.LoadListFromXMLSerializer<DO.Orders>("Order.xml");
         orderList.Add(order);
         XMLTools.SaveListToXMLSerializer(orderList, @"Order.xml");
-        //XElement productRootElem = XMLTools.LoadListFromXMLElement(@"Order.xml");
-        //productRootElem.Add(order);
-        //XMLTools.SaveListToXMLElement(productRootElem, @"Order.xml");
     }
     private static int getOrderId()
     {
@@ -75,9 +72,6 @@ public static class Program
 
     private static void addOrderItem(OrderItem orderItem)
     {
-        //List<DO.OrderItem?> orderItemList = XMLTools.LoadListFromXMLSerializer<DO.OrderItem?>("OrderItem.xml");
-        //orderItemList.Add(orderItem);
-        //XMLTools.SaveListToXMLSerializer(orderItemList, @"OrderItem.xml");
 
         XElement productRootElem = XMLTools.LoadListFromXMLElement(@"OrderItem.xml");
         productRootElem.Add(orderItem);

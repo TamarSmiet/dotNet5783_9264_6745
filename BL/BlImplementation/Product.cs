@@ -58,18 +58,7 @@ internal class Product:IProduct
     public IEnumerable<BO.ProductItem?> GetAllProductItemsGroupingByCategorie()
     {
         IEnumerable<DO.Products?> productListFromDo = Dal.product.GetAll();
-        //var productsList = from DO.Products? product in productListFromDo
-        //                   where product != null
-        //                   orderby product.Value._price ascending
-        //                   select new BO.ProductItem()
-        //                   {
-        //                       Id = product.Value._productId,
-        //                       price = product.Value._price,
-        //                       Name = product.Value._productName,
-        //                       category = (BO.Enums.eCategory?)product.Value._category,
-        //                       IsInStock = true ? product.Value._amountInStock > 0 : false,
-        //                       AmountItemInCart = 0
-        //                   };
+                    
 
         var GropupingProducts = (from DO.Products? product in productListFromDo
                                  group product by product.Value._category into catGroup
@@ -84,10 +73,10 @@ internal class Product:IProduct
                                      AmountItemInCart = 0
                                  });
 
-        //productListFromDo = new(GropupingProducts);
+       
         return GropupingProducts.ToList();
 
-        //return productsList.ToList();
+       
     }
     public IEnumerable<BO.ProductForList> GetProductForListByCategory(BO.Enums.eCategory category)
     {
@@ -126,13 +115,6 @@ internal class Product:IProduct
                         .OrderBy(product => product.price);
 
         return productList;
-    //     public int IdOrder { get; set; }
-    //public int Id { get; set; }
-    //public string? Name { get; set; }
-    //public double Price { get; set; }
-    //public int AmountItems { get; set; }
-    //public double TotalPriceItem { get; set; }
-
 }
 
 public BO.Product GetProduct(int id)

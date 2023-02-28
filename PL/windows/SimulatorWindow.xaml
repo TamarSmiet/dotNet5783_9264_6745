@@ -6,14 +6,13 @@
         xmlns:local="clr-namespace:PL.windows"
         mc:Ignorable="d"
         Title="SimulatorWindow" Height="450" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Closing="OnClosing">
     <Grid>
         <Label Content="{Binding ClockText}" Height="50" Width="100" Margin="-300,-300,0,0"/>
-        <Label Content="{Binding ExpectedOrderDetails , Mode=TwoWay}" Margin="200,117,210,155"/>
+        <Label Content="{Binding ExpectedOrderDetails , Mode=TwoWay}" Margin="200,117,255,155"/>
         <Label Content="{Binding CurrentOrderHandle, Mode=TwoWay}" Margin="200,303,298,48"/>
-
-        <Button Content="stop timer" Height="50" Width="100" Click="StopTimerButton_Click" Margin="590,148,110,236"></Button>
-        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="400,409,0,0" VerticalAlignment="Top" Width="100" Name="progressBar"/>
+        <Button Content="stop timer" Height="50" Width="100" Click="StopTimerButton_Click" Margin="550,148,150,236"></Button>
 
     </Grid>
 </Window>

@@ -38,7 +38,7 @@ namespace Dal
                 if (File.Exists(dir + filePath))
                 {
                     return XElement.Load(dir + filePath);
-                    //dir + filePath
+                    
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Dal
             {
                 //put it just to make it work
                 throw new Exception(filePath, ex);
-                //throw new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
+              
             }
         }
         #endregion

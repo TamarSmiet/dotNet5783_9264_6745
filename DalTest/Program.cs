@@ -13,16 +13,12 @@ namespace DalTest
         static private Products product = new Products();
         static private Orders order = new Orders();
         static private OrderItem orderItem = new OrderItem();
-        //static IDal IDalVariable = new DalList();
         static DalApi.IDal? IDalVariable =DalApi.Factory.Get();
-       //static IDal? IDalVariable = Factory.Get();
 
         public static void Main()
         {
             DataSource.startDataSource();
             int choice;
-            //IDal IDalVariable = new DalList();
-            //IDal? IDalVariable = Factory.Get();
             Console.WriteLine("Enter a number 1-3 or 0 to exit:");
             int.TryParse(Console.ReadLine(), out choice);
 
@@ -131,7 +127,7 @@ namespace DalTest
                         if (product != null)
                             Console.WriteLine(product);
                     }
-                    //Console.WriteLine(IDalVariable.product.GetAll());
+                   
                     break;
                 case 4://delete
                     Console.WriteLine("Enter an Id of product:");
@@ -220,12 +216,7 @@ namespace DalTest
                     order._customerName = Console.ReadLine();
                     order._email = Console.ReadLine();
                     order._address = Console.ReadLine();
-                    //DateTime.TryParse(Console.ReadLine(), out date);
-                    //order._orderDate = date;
-                    //DateTime.TryParse(Console.ReadLine(), out date);
-                    //order._shippingDate = date;
-                    //DateTime.TryParse(Console.ReadLine(), out date);
-                    //order._deliveryDate = date;
+                    
                     IDalVariable.order.Add(order);
                     break;
 

@@ -38,7 +38,6 @@ namespace Dal
             DO.OrderItem orderItem = new()
             {
                  
-                //ID = 10 Order ID:1 Product ID: 100001 Price: 2000 Amount of product: 1
                 _id = int.Parse(x.Element("_id")!.Value.ToString()),
                 _orderId = int.Parse(x.Element("_orderId").Value.ToString()),
                 _productId=int.Parse(x.Element("_productId").Value.ToString()),
